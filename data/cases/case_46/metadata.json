@@ -1,0 +1,15 @@
+{
+    "case_id": "46",
+    "url": "https://ecg.bidmc.harvard.edu/maven/dispcase.asp?rownum=45&ans=1&caseid=46",
+    "clinical_history": "What is the rhythm?",
+    "diagnosis": "Atrial flutter. Don't miss hidden atrial (F) wave just after QRS. This is atrial flutter with 2:1 conduction. Note that with atrial flutter there aren't P waves per se but atrial waves. So if you talk about atrial flutter do not say \"the P waves....\" since once you say P wave, the informed listener will probably assume it's not atrial fibrillation or atrial flutter. On the other hand, depending on whom you are talking to, this may not be an issue. Also note left ventricular hypertrophy (LVH) and left axis with possible prior inferior wall myocardial infarction (MI) here.  Note that typical flutter waves have negative polarity in lead II, as is the case here.",
+    "image_url": "https://ecg.bidmc.harvard.edu/mavendata/images/case46/800x400.gif",
+    "difficulty": 3,
+    "topics": [
+        "Myocardial Infarction",
+        "Atrial Fibrillation",
+        "Atrial Flutter",
+        "Left Ventricular Hypertrophy"
+    ],
+    "category": "Myocardial Infarction"
+}

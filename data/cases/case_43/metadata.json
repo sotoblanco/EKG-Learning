@@ -1,0 +1,13 @@
+{
+    "case_id": "43",
+    "url": "https://ecg.bidmc.harvard.edu/maven/dispcase.asp?rownum=42&ans=1&caseid=43",
+    "clinical_history": "51-year-old woman with cardiac surgical appointment.  Can you figure out the procedure? Clue: mind the P waves.",
+    "diagnosis": "The patient had severe mitral stenosis (MS) and was in for mitral valve replacement. The findings here are quite subtle and illustrate limitations of the ECG in diagnostic sensitivity. The major ECG finding is prominent left atrial abnormality (LAA) with a very minimal RV conduction delay (V2). You can re-look at this P waves under increased magnification, esp. in lead II and V1 The negative component of the P wave in lead V1 is of low amplitude but of increased duration (at least 80 ms).. Most patients with severe MS have combination of right ventricular hypertrophy (RVH) with LAA or atrial fibrillation (AF). The QRS axis here is normal. The subtle ECG findings in concert with the major anatomic abnormality make this case notable. Whenever you see marked LAA, always think about occult mitral valve disease, as well as cardiomyopathy, etc.",
+    "image_url": "https://ecg.bidmc.harvard.edu/mavendata/images/case43/800x400.gif",
+    "difficulty": 4,
+    "topics": [
+        "Atrial Fibrillation",
+        "Right Ventricular Hypertrophy"
+    ],
+    "category": "Hypertrophy"
+}

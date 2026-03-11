@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EKG Cases Library</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+
+<body>
+    <div class="top-nav">
+        <button id="tabBrowse" class="tab-button active">Browse Mode</button>
+        <button id="tabQuiz" class="tab-button">Quiz Mode</button>
+        <button id="tabLearning" class="tab-button">Learning Path</button>
+    </div>
+
+    <!-- Browse View (Original App) -->
+    <div id="browseView" class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-filters">
+                <select id="categoryFilter" class="filter-select" style="margin-bottom: var(--spacing-sm);">
+                    <option value="all">All Categories</option>
+                    <option value="Fundamentals">Fundamentals</option>
+                    <option value="Frequency">Frequency</option>
+                    <option value="Rhythm">Rhythm</option>
+                    <option value="Axis">Axis</option>
+                    <option value="Hypertrophy">Hypertrophy</option>
+                    <option value="Myocardial Infarction">Myocardial Infarction</option>
+                    <option value="Diverse disease">Diverse disease</option>
+                </select>
+                <select id="topicFilter" class="filter-select" style="margin-bottom: var(--spacing-sm);">
+                    <option value="all">All Topics</option>
+                    <option value="Acute Coronary Syndrome">Acute Coronary Syndrome</option>
+                    <option value="Myocardial Infarction">Myocardial Infarction</option>
+                    <option value="Pericarditis">Pericarditis</option>
+                    <option value="Atrial Fibrillation">Atrial Fibrillation</option>
+                    <option value="Atrial Flutter">Atrial Flutter</option>
+                    <option value="Ventricular Tachycardia">VTach</option>
+                    <option value="Ventricular Fibrillation">VFib</option>
+                    <option value="Hyperkalemia">Hyperkalemia</option>
+                    <option value="Hypokalemia">Hypokalemia</option>
+                    <option value="Long QT Syndrome">Long QT / LQTS</option>
+                    <option value="Left Bundle Branch Block">LBBB</option>
+                    <option value="Right Bundle Branch Block">RBBB</option>
+                    <option value="AV Block">AV Block</option>
+                    <option value="Wolff-Parkinson-White">WPW</option>
+                    <option value="Supraventricular Tachycardia">SVT</option>
+                    <option value="Premature Ventricular Contractions">PVCs</option>
+                    <option value="Premature Atrial Contractions">PACs</option>
+                    <option value="Left Ventricular Hypertrophy">LVH</option>
+                    <option value="Right Ventricular Hypertrophy">RVH</option>
+                    <option value="Normal Sinus Rhythm">Normal Sinus Rhythm</option>
+                    <option value="Uncategorized">Uncategorized</option>
+                </select>
+                <select id="difficultyFilter" class="filter-select">
+                    <option value="all">All Difficulties</option>
+                    <option value="1">Difficulty: *</option>
+                    <option value="2">Difficulty: **</option>
+                    <option value="3">Difficulty: ***</option>
+                    <option value="4">Difficulty: ****</option>
+                    <option value="5">Difficulty: *****</option>
+                    <option value="0">Unrated</option>
+                </select>
+            </div>
+            <nav class="case-list" id="caseList">
+                <!-- Cases injected here via JS -->
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <h1 id="caseTitle">Select a Case</h1>
+            </header>
+
+            <div class="content-body" id="caseContent" style="display: none;">
+                <div class="image-panel">
+                    <img id="ekgImage" src="" alt="EKG" loading="lazy">
+                </div>
+
+                <div class="info-panel">
+                    <div class="info-group">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--spacing-sm);">
+                            <h3 style="margin-bottom: 0;">Clinical History</h3>
+                            <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <span id="categoryBadge" class="badge"
+                                        style="display: none; background-color: rgba(168, 85, 247, 0.1); color: #c084fc; border-color: rgba(168, 85, 247, 0.2);"></span>
+                                    <span id="difficultyBadge" class="badge" style="display: none;"></span>
+                                </div>
+                                <div id="topicsContainer"
+                                    style="display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end;"></div>
+                            </div>
+                        </div>
+                        <p id="clinicalHistory"></p>
+                    </div>
+
+                    <div class="info-group">
+                        <h3>Diagnosis</h3>
+                        <p id="diagnosisText"></p>
+                    </div>
+
+                    <div class="info-actions">
+                        <a id="sourceUrl" href="#" target="_blank" rel="noopener" class="button">View Source</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="empty-state" id="emptyState">
+                <p>Select a case from the sidebar to view details.</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Learning Path Setup View -->
+    <div id="learningSetupView" class="quiz-container" style="display: none;">
+        <div class="quiz-card">
+            <h2>Select a Learning Category</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 24px; font-size: 14px;">Choose a category. We'll guide you through the core principles of each topic followed by progressive practice cases.</p>
+            
+            <div class="form-group">
+                <label>Category</label>
+                <select id="learningCategorySelect" class="filter-select">
+                    <!-- Populated by JS -->
+                </select>
+            </div>
+
+            <button id="startLearningBtn" class="button primary-button mt-4" style="width: 100%; height: 40px; font-size: 15px;">Start Path</button>
+            <p id="learningSetupError" style="color: #f87171; font-size: 13px; margin-top: 12px; display: none;"></p>
+        </div>
+    </div>
+    
+    <!-- Learning Path Pre-Lesson View -->
+    <div id="learningPreLessonView" class="quiz-container" style="display: none;">
+        <div class="quiz-card" style="max-width: 800px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
+                <h2 id="learningPreLessonTopic" style="margin: 0;">Topic Introduction</h2>
+                <span class="badge" style="background-color: rgba(56, 189, 248, 0.1); color: var(--primary-color);">Theory</span>
+            </div>
+            
+            <div id="learningMarkdownContent" class="markdown-body" style="max-height: 55vh; overflow-y: auto; padding: var(--spacing-md); background-color: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: var(--spacing-lg); font-size: 14.5px; line-height: 1.7;">
+                <p>Loading content...</p>
+            </div>
+            
+            <button id="continueToLessonCaseBtn" class="button primary-button" style="width: 100%; height: 48px; font-size: 15px;">Continue to Walkthrough Case &rarr;</button>
+            <button id="quitLearningFromPrepBtn" class="button danger-button" style="width: 100%; height: 40px; margin-top: 12px;">Quit Path</button>
+        </div>
+    </div>
+
+    <!-- Learning Path Active View -->
+    <div id="learningActiveView" class="quiz-container" style="display: none;">
+        <div class="quiz-header" style="justify-content: space-between;">
+            <div>
+                <h2 id="learningProgressTitle" style="margin-bottom: 4px;">Topic: ...</h2>
+                <div style="font-size: 13px; color: var(--text-secondary);" id="learningProgressSub">Case 1 of 3</div>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+                <span id="learningPhaseBadge" class="badge">Lesson</span>
+                <button id="quitLearningBtn" class="button danger-button">Quit Path</button>
+            </div>
+        </div>
+        
+        <div class="content-body" style="padding-top: var(--spacing-lg);">
+            <div id="learningPrincipleCallout" style="display: none; background-color: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.2); padding: var(--spacing-md); border-radius: 8px; margin-bottom: var(--spacing-md);">
+                <h3 style="font-size: 14px; color: #c084fc; margin-bottom: 4px;">Teacher's Note</h3>
+                <p style="font-size: 14px; color: #e9d5ff;">This is the easiest case in this topic. Review the diagnosis immediately to see the core principles in action on a real EKG.</p>
+            </div>
+
+            <div class="image-panel">
+                <img id="learningEkgImage" src="" alt="EKG" loading="lazy">
+            </div>
+
+            <div class="info-panel">
+                <div class="info-group">
+                    <h3 style="margin-bottom: var(--spacing-sm);">Clinical History</h3>
+                    <p id="learningClinicalHistory"></p>
+                </div>
+
+                <div id="learningAnswerSection" class="quiz-answer-hidden">
+                    <button id="learningShowAnswerBtn" class="button primary-button" style="width: 100%; height: 48px; font-size: 16px;">Reveal Diagnosis & Feedback</button>
+                    
+                    <div id="learningRevealedContent" style="display: none;">
+                        <hr style="border-color: var(--border-color); margin: 24px 0;">
+                        <div class="info-group">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--spacing-sm);">
+                                <h3 style="margin-bottom: 0;">Diagnosis & Principles</h3>
+                                <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+                                    <div style="display: flex; gap: 8px; align-items: center;">
+                                        <span id="learningDifficultyBadge" class="badge" style="display: none;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p id="learningDiagnosisText"></p>
+                        </div>
+                        
+                        <div class="info-actions" style="display: flex; justify-content: space-between;">
+                            <a id="learningSourceUrl" href="#" target="_blank" rel="noopener" class="button">View Source</a>
+                            <button id="learningNextBtn" class="button primary-button">Next Step &rarr;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="quizSetupView" class="quiz-container" style="display: none;">
+        <div class="quiz-card">
+            <h2>Quiz Settings</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 24px; font-size: 14px;">Select filters to focus your quiz, or leave as "All" for a random mix.</p>
+            
+            <div class="form-group">
+                <label>Category</label>
+                <select id="quizCategoryFilter" class="filter-select">
+                    <!-- Options populated by JS to match browse -->
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Topic</label>
+                <select id="quizTopicFilter" class="filter-select">
+                   <!-- Options populated by JS to match browse -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Difficulty</label>
+                <select id="quizDifficultyFilter" class="filter-select">
+                    <!-- Options populated by JS to match browse -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Number of Questions</label>
+                <select id="quizLengthFilter" class="filter-select">
+                    <option value="5">5 Questions</option>
+                    <option value="10" selected>10 Questions</option>
+                    <option value="20">20 Questions</option>
+                    <option value="all">All Available</option>
+                </select>
+            </div>
+
+            <button id="startQuizBtn" class="button primary-button mt-4" style="width: 100%; height: 40px; font-size: 15px;">Start Quiz</button>
+            <p id="quizSetupError" style="color: #f87171; font-size: 13px; margin-top: 12px; display: none;"></p>
+        </div>
+    </div>
+
+    <!-- Quiz Active View -->
+    <div id="quizActiveView" class="quiz-container" style="display: none;">
+        <div class="quiz-header">
+            <h2 id="quizProgressTitle">Question 1 of 10</h2>
+            <button id="quitQuizBtn" class="button danger-button">Quit Quiz</button>
+        </div>
+        
+        <div class="content-body" style="padding-top: 0;">
+            <div class="image-panel">
+                <img id="quizEkgImage" src="" alt="EKG" loading="lazy">
+            </div>
+
+            <div class="info-panel">
+                <div class="info-group">
+                    <h3 style="margin-bottom: var(--spacing-sm);">Clinical History</h3>
+                    <p id="quizClinicalHistory"></p>
+                </div>
+
+                <div id="quizAnswerSection" class="quiz-answer-hidden">
+                    <button id="showAnswerBtn" class="button primary-button" style="width: 100%; height: 48px; font-size: 16px;">Show Answer</button>
+                    
+                    <div id="quizRevealedContent" style="display: none;">
+                        <hr style="border-color: var(--border-color); margin: 24px 0;">
+                        <div class="info-group">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--spacing-sm);">
+                                <h3 style="margin-bottom: 0;">Diagnosis</h3>
+                                <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+                                    <div style="display: flex; gap: 8px; align-items: center;">
+                                        <span id="quizCategoryBadge" class="badge"
+                                            style="display: none; background-color: rgba(168, 85, 247, 0.1); color: #c084fc; border-color: rgba(168, 85, 247, 0.2);"></span>
+                                        <span id="quizDifficultyBadge" class="badge" style="display: none;"></span>
+                                    </div>
+                                    <div id="quizTopicsContainer"
+                                        style="display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end;"></div>
+                                </div>
+                            </div>
+                            <p id="quizDiagnosisText"></p>
+                        </div>
+                        
+                        <div class="info-actions" style="display: flex; justify-content: space-between;">
+                            <a id="quizSourceUrl" href="#" target="_blank" rel="noopener" class="button">View Source</a>
+                            <button id="nextQuestionBtn" class="button primary-button">Next Question &rarr;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+{
+    "case_id": "51",
+    "url": "https://ecg.bidmc.harvard.edu/maven/dispcase.asp?rownum=50&ans=1&caseid=51",
+    "clinical_history": "55-year-old woman: why is she dyspneic?",
+    "diagnosis": "ECG findings are left atrial abnormality(LAA) (biphasic P in V1 with broad negative component) and broad P waves elsewhere plus a tall R in V1 with a vertical QRS axis (about +80 degrees). A tall R in V1 with a vertical or particularly rightward axis generally indicates right ventricular hypertrophy (RVH). The combination of LAA with evidence of RVH in a dyspneic patient is most c/w with rheumatic mitral valve disease with severe mitral stenosis (MS). That's what this patient had with mild mitral regurgitation (MR) as well.",
+    "image_url": "https://ecg.bidmc.harvard.edu/mavendata/images/case51/800x400.gif",
+    "difficulty": 2,
+    "topics": [
+        "Right Ventricular Hypertrophy"
+    ],
+    "category": "Hypertrophy"
+}

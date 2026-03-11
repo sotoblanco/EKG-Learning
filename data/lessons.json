@@ -1,0 +1,60 @@
+{
+    "Fundamentals": {
+        "intro": "lessons/fundamentals/intro.md",
+        "topics": {
+            "Normal Sinus Rhythm": "lessons/fundamentals/normal_sinus_rhythm.md",
+            "Lead Reversal": "lessons/fundamentals/lead_reversal.md",
+            "Uncategorized": "lessons/fundamentals/intro.md"
+        }
+    },
+    "Frequency": {
+        "intro": "lessons/frequency/intro.md",
+        "topics": {}
+    },
+    "Rhythm": {
+        "intro": "lessons/rhythm/intro.md",
+        "topics": {
+            "Atrial Fibrillation": "lessons/rhythm/atrial_fibrillation.md",
+            "Atrial Flutter": "lessons/rhythm/atrial_flutter.md",
+            "Supraventricular Tachycardia": "lessons/rhythm/supraventricular_tachycardia.md",
+            "Ventricular Tachycardia": "lessons/rhythm/ventricular_tachycardia.md",
+            "Ventricular Fibrillation": "lessons/rhythm/ventricular_fibrillation.md",
+            "AV Block": "lessons/rhythm/av_block.md",
+            "Premature Ventricular Contractions": "lessons/rhythm/premature_beats.md",
+            "Premature Atrial Contractions": "lessons/rhythm/premature_beats.md",
+            "Wolff-Parkinson-White": "lessons/rhythm/wolff_parkinson_white.md"
+        }
+    },
+    "Axis": {
+        "intro": "lessons/axis/intro.md",
+        "topics": {
+            "Left Bundle Branch Block": "lessons/axis/left_bundle_branch_block.md",
+            "Right Bundle Branch Block": "lessons/axis/right_bundle_branch_block.md"
+        }
+    },
+    "Hypertrophy": {
+        "intro": "lessons/hypertrophy/intro.md",
+        "topics": {
+            "Left Ventricular Hypertrophy": "lessons/hypertrophy/intro.md",
+            "Right Ventricular Hypertrophy": "lessons/hypertrophy/intro.md"
+        }
+    },
+    "Myocardial Infarction": {
+        "intro": "lessons/myocardial_infarction/intro.md",
+        "topics": {
+            "Myocardial Infarction": "lessons/myocardial_infarction/intro.md",
+            "Acute Coronary Syndrome": "lessons/myocardial_infarction/intro.md",
+            "Uncategorized": "lessons/myocardial_infarction/intro.md"
+        }
+    },
+    "Diverse disease": {
+        "intro": "lessons/diverse_disease/intro.md",
+        "topics": {
+            "Pericarditis": "lessons/diverse_disease/intro.md",
+            "Hyperkalemia": "lessons/diverse_disease/intro.md",
+            "Hypokalemia": "lessons/diverse_disease/intro.md",
+            "Long QT Syndrome": "lessons/diverse_disease/intro.md",
+            "Uncategorized": "lessons/diverse_disease/intro.md"
+        }
+    }
+}

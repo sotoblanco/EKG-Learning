@@ -1,0 +1,13 @@
+{
+    "case_id": "28",
+    "url": "https://ecg.bidmc.harvard.edu/maven/dispcase.asp?rownum=27&ans=1&caseid=28",
+    "clinical_history": "67-year-old man after VF arrest. What is the underlying disease?",
+    "diagnosis": "ECG shows sinus rhythm with right bundle branch block (RBBB) and left axis deviation, the latter consistent with left anterior fascicular block.There are pathologic anterior Q waves V1-V3 with very slow R wave progression thereafter. The patient had severe coronary artery disease (CAD) with a trans-thoracic echo showing septal dyskinesis and apical akinesis. Note the rSr&39; morphology in V4. This polyphasic QRS phenotype  in the left chest leads has been reported with ventricular aneurysm (El-Sherif sign). The patient was treated  with amiodarone for ventricular tachyarrhythmias associated with chronic CAD with extensive scarring of left ventricle.",
+    "image_url": "https://ecg.bidmc.harvard.edu/mavendata/images/case28/800x400.gif",
+    "difficulty": 3,
+    "topics": [
+        "Ventricular Fibrillation",
+        "Right Bundle Branch Block"
+    ],
+    "category": "Rhythm"
+}
