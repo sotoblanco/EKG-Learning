@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabQuiz = document.getElementById('tabQuiz');
     
     // Views
+    const introView = document.getElementById('introView');
     const browseView = document.getElementById('browseView');
     const quizSetupView = document.getElementById('quizSetupView');
     const quizActiveView = document.getElementById('quizActiveView');
@@ -80,6 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const learningSourceUrl = document.getElementById('learningSourceUrl');
     const learningNextBtn = document.getElementById('learningNextBtn');
     const learningLaunchInteractive = document.getElementById('learningLaunchInteractive');
+    
+    // Intro Elements
+    const introContentEl = document.getElementById('introContent');
+    const startAppBtn = document.getElementById('startAppBtn');
+    const topNavEl = document.querySelector('.top-nav');
 
     // State
     let allCases = [];
@@ -90,6 +96,22 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let learningCurriculum = []; // Array of { type: 'pre_lesson'|'lesson'|'practice', topic: string, caseData: obj }
     let currentLearningIndex = 0;
+
+    const INTRO_MARKDOWN = `
+# Master EKG Interpretation
+
+Welcome to the **EKG Cases Library**. This interactive platform is designed to help medical professionals and students sharpen their ECG interpretation skills through real-world clinical cases.
+
+### What you can do:
+- **Browse Mode**: Explore our extensive library of cases with detailed clinical histories and expert diagnoses.
+- **Quiz Mode**: Test your knowledge with randomized quizzes tailored to specific categories or difficulty levels.
+- **Learning Path**: Follow a progressive curriculum that takes you from fundamental principles to complex clinical scenarios.
+
+> [!TIP]
+> Use the **Learning Path** if you are just starting out. It provides theoretical background before challenging you with cases.
+
+Click the button below to begin your journey into the world of electrocardiology.
+`;
 
     // ---- Initialization ----
 
@@ -105,6 +127,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     initFilters();
+
+    function initIntro() {
+        if (!introContentEl) return;
+        
+        // Render Markdown
+        if (typeof marked !== 'undefined') {
+            introContentEl.innerHTML = marked.parse(INTRO_MARKDOWN);
+        } else {
+            introContentEl.textContent = INTRO_MARKDOWN;
+        }
+
+        // Hide top nav initially
+        if (topNavEl) topNavEl.style.display = 'none';
+        
+        // Show intro view, hide others
+        introView.style.display = 'flex';
+        browseView.style.display = 'none';
+        
+        startAppBtn.addEventListener('click', () => {
+            introView.style.display = 'none';
+            if (topNavEl) topNavEl.style.display = 'flex';
+            switchTab('browse');
+        });
+    }
+    initIntro();
 
     // Fetch Educational Content
     fetch('data/lessons.json?_t=' + new Date().getTime())
@@ -125,6 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if(learningSetupView) learningSetupView.style.display = 'none';
         if(learningPreLessonView) learningPreLessonView.style.display = 'none';
         if(learningActiveView) learningActiveView.style.display = 'none';
+        
+        if (introView) introView.style.display = 'none';
 
         if (tab === 'browse') {
             tabBrowse.classList.add('active');
