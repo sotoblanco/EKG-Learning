@@ -86,46 +86,41 @@
 
         /* Coronary Anatomy Diagram */
         .heart-map {
-            width: 300px;
-            height: 300px;
+            width: 320px;
+            height: 320px;
             margin: 0 auto;
             position: relative;
-            background: #f1f5f9;
-            border-radius: 50%;
-            border: 4px solid #e2e8f0;
+            background: transparent;
         }
-        .territory {
-            position: absolute;
-            transition: all 0.3s ease;
+        .territory-path {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            stroke: #fff;
+            stroke-width: 2;
+        }
+        .territory-path:hover {
+            filter: brightness(1.1) drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+            stroke-width: 3;
+        }
+        .active-lad { fill: #0ea5e9 !important; filter: drop-shadow(0 0 12px rgba(14, 165, 233, 0.4)) !important; }
+        .active-rca { fill: #e11d48 !important; filter: drop-shadow(0 0 12px rgba(225, 29, 72, 0.4)) !important; }
+        .active-lcx { fill: #8b5cf6 !important; filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.4)) !important; }
+        
+        .label-text {
+            pointer-events: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
             font-size: 14px;
-            color: white;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            fill: #1e293b;
+            text-anchor: middle;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
         }
-        .territory-lad {
-            top: 10%; left: 35%; width: 50%; height: 60%;
-            background: #cbd5e1; /* Neutral */
-            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-            border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%;
+        .active-label {
+            fill: white !important;
+            opacity: 1 !important;
         }
-        .territory-rca {
-            top: 40%; left: 10%; width: 40%; height: 50%;
-            background: #cbd5e1;
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-            border-radius: 70% 30% 70% 30% / 40% 60% 40% 60%;
-        }
-        .territory-lcx {
-            top: 20%; right: 10%; width: 40%; height: 40%;
-            background: #cbd5e1;
-            border-radius: 30% 70% 40% 60%;
-        }
-        .territory.active-lad { background: #0ea5e9; transform: scale(1.05); z-index: 10; }
-        .territory.active-rca { background: #e11d48; transform: scale(1.05); z-index: 10; }
-        .territory.active-lcx { background: #8b5cf6; transform: scale(1.05); z-index: 10; }
     </style>
 </head>
 <body class="flex flex-col md:flex-row h-screen overflow-hidden">
@@ -268,9 +263,27 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
                     <div>
                         <div class="heart-map">
-                            <div id="diag-lad" onclick="selectArtery('lad')" class="territory territory-lad">LAD</div>
-                            <div id="diag-rca" onclick="selectArtery('rca')" class="territory territory-rca">RCA</div>
-                            <div id="diag-lcx" onclick="selectArtery('lcx')" class="territory territory-lcx">LCX</div>
+                            <svg viewBox="0 0 200 200" class="w-full h-full">
+                                <!-- RCA (Right Ventricle / Inferior Wall) -->
+                                <path id="diag-rca" onclick="selectArtery('rca')" class="territory-path transition-all" 
+                                    d="M100 180 C 60 170, 20 130, 20 80 C 20 40, 60 20, 100 60 L 100 130 Z" 
+                                    fill="#f1f5f9" />
+                                
+                                <!-- LAD (Septum / Anterior LV) -->
+                                <path id="diag-lad" onclick="selectArtery('lad')" class="territory-path transition-all" 
+                                    d="M100 180 L 100 60 C 120 40, 160 50, 170 80 C 180 120, 140 170, 100 180 Z" 
+                                    fill="#f1f5f9" />
+                                
+                                <!-- LCX (Lateral LV) - Overlaying a bit of the LAD but more lateral -->
+                                <path id="diag-lcx" onclick="selectArtery('lcx')" class="territory-path transition-all" 
+                                    d="M140 70 C 160 70, 185 90, 180 120 C 175 145, 140 170, 110 175 L 125 100 Z" 
+                                    fill="#f1f5f9" />
+
+                                <!-- Labels -->
+                                <text x="60" y="110" id="label-rca" class="label-text">RCA</text>
+                                <text x="130" y="140" id="label-lad" class="label-text">LAD</text>
+                                <text x="155" y="100" id="label-lcx" class="label-text">LCX</text>
+                            </svg>
                         </div>
                     </div>
                     <div class="space-y-6">
@@ -414,8 +427,15 @@
             const data = arteryMap[id];
             
             // Highlight Diag
-            document.querySelectorAll('.territory').forEach(t => t.className = t.className.replace(/active-\w+/g, ''));
-            document.getElementById(`diag-${id}`).classList.add(data.color);
+            document.querySelectorAll('.territory-path').forEach(t => {
+                t.classList.remove('active-lad', 'active-rca', 'active-lcx');
+                t.setAttribute('fill', '#f1f5f9');
+            });
+            document.querySelectorAll('.label-text').forEach(l => l.classList.remove('active-label'));
+
+            const path = document.getElementById(`diag-${id}`);
+            path.classList.add(data.color);
+            document.getElementById(`label-${id}`).classList.add('active-label');
 
             // Update Card
             const card = document.getElementById('artery-card');
