@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const learningSetupError = document.getElementById('learningSetupError');
 
     const learningPreLessonTopic = document.getElementById('learningPreLessonTopic');
-    const learningMarkdownContent = document.getElementById('learningMarkdownContent');
+    const learningFrame = document.getElementById('learningFrame');
     const continueToLessonCaseBtn = document.getElementById('continueToLessonCaseBtn');
     const quitLearningFromPrepBtn = document.getElementById('quitLearningFromPrepBtn');
 
@@ -525,7 +525,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (step.type === 'pre_lesson') {
             learningPreLessonView.style.display = 'flex';
             learningPreLessonTopic.textContent = `Topic: ${step.topic}`;
-            learningMarkdownContent.innerHTML = '<p>Loading content...</p>';
+            learningFrame.src = 'about:blank';
             
             // Show interactive button if Fundamentals
             if (step.category === 'Fundamentals' && learningLaunchInteractive) {
@@ -536,31 +536,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 learningLaunchInteractive.style.display = 'none';
             }
 
-            // Determine which .md file to fetch
+            // Determine which HTML file to use in iframe
             const catData = lessonsData[step.category] || {};
-            let mdFile = null;
+            let lessonPath = null;
             
             // First check topic-specific file
             if (catData.topics && catData.topics[step.topic]) {
-                mdFile = catData.topics[step.topic];
+                lessonPath = catData.topics[step.topic];
             }
             // Fallback to category intro
-            if (!mdFile && catData.intro) {
-                mdFile = catData.intro;
+            if (!lessonPath && catData.intro) {
+                lessonPath = catData.intro;
             }
             
-            if (mdFile) {
-                fetch(`data/${mdFile}?_t=` + new Date().getTime())
-                    .then(res => res.text())
-                    .then(md => {
-                        learningMarkdownContent.innerHTML = marked.parse(md);
-                    })
-                    .catch(err => {
-                        console.error('Error loading lesson markdown', err);
-                        learningMarkdownContent.innerHTML = `<p>Could not load lesson content for ${step.topic}.</p>`;
-                    });
+            if (lessonPath) {
+                // Point iframe to the HTML file
+                // If it starts with fundamentals/ or is already a data/ path, use as is. 
+                // Otherwise prepend data/
+                if (lessonPath.startsWith('fundamentals/') || lessonPath.startsWith('data/')) {
+                    learningFrame.src = lessonPath;
+                } else {
+                    learningFrame.src = `data/${lessonPath}`;
+                }
             } else {
-                learningMarkdownContent.innerHTML = `<p>No lesson material available yet for <strong>${step.topic}</strong>. You can create a markdown file for this topic in <code>data/lessons/</code>.</p>`;
+                // Show a helpful error within the iframe if possible, or just blank
+                console.warn(`No lesson HTML found for ${step.topic}`);
+                learningFrame.srcdoc = `<html><body style="font-family: sans-serif; padding: 40px; text-align: center; color: #666;">
+                    <h3>Lesson Coming Soon</h3>
+                    <p>No HTML content is mapped for <b>${step.topic}</b> yet.</p>
+                </body></html>`;
             }
 
         } else {
