@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const learningSourceUrl = document.getElementById('learningSourceUrl');
     const learningNextBtn = document.getElementById('learningNextBtn');
     const learningLaunchInteractive = document.getElementById('learningLaunchInteractive');
+    const learningLaunchBtn = document.getElementById('learningLaunchBtn');
     
     // Intro Elements
     const introContentEl = document.getElementById('introContent');
@@ -573,6 +574,9 @@ Click the button below to begin your journey into the world of electrocardiology
 
         if (step.type === 'pre_lesson') {
             learningPreLessonView.style.display = 'flex';
+            learningPreLessonTopic.textContent = `Topic: ${step.topic}`;
+            learningFrame.src = 'about:blank';
+
             // Handle Theory Rendering (.md or .html)
             const catData = lessonsData[step.category] || {};
             let lessonPath = null;
@@ -626,10 +630,10 @@ Click the button below to begin your journey into the world of electrocardiology
                     // Update Interactive Button to point to the .html version
                     if (learningLaunchInteractive) {
                         learningLaunchInteractive.style.display = 'block';
-                        const interactiveLink = learningLaunchInteractive.querySelector('a');
-                        if (interactiveLink) {
-                            interactiveLink.href = fullPath.replace('.md', '.html');
-                        }
+                        learningLaunchBtn.onclick = () => {
+                            learningFrame.src = fullPath.replace('.md', '.html');
+                            learningLaunchInteractive.style.display = 'none'; // Hide once launched
+                        };
                     }
                 } else {
                     // Load HTML directly in iframe
