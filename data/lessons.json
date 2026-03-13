@@ -2,9 +2,9 @@
     "Fundamentals": {
         "intro": "fundamentals/index.html",
         "topics": {
-            "Normal Sinus Rhythm": "lessons/fundamentals/normal_sinus_rhythm.html",
-            "Lead Reversal": "lessons/fundamentals/lead_reversal.html",
-            "Uncategorized": "lessons/fundamentals/intro.html"
+            "Normal Sinus Rhythm": "lessons/fundamentals/normal_sinus_rhythm.md",
+            "Lead Reversal": "lessons/fundamentals/lead_reversal.md",
+            "Uncategorized": "lessons/fundamentals/intro.md"
         }
     },
     "Frequency": {

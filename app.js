@@ -573,47 +573,72 @@ Click the button below to begin your journey into the world of electrocardiology
 
         if (step.type === 'pre_lesson') {
             learningPreLessonView.style.display = 'flex';
-            learningPreLessonTopic.textContent = `Topic: ${step.topic}`;
-            learningFrame.src = 'about:blank';
-            
-            // Show interactive button if Fundamentals
-            if (step.category === 'Fundamentals' && learningLaunchInteractive) {
-                learningLaunchInteractive.style.display = 'block';
-                const interactiveLink = learningLaunchInteractive.querySelector('a');
-                if (interactiveLink) interactiveLink.href = 'fundamentals/';
-            } else if (learningLaunchInteractive) {
-                learningLaunchInteractive.style.display = 'none';
-            }
-
-            // Determine which HTML file to use in iframe
+            // Handle Theory Rendering (.md or .html)
             const catData = lessonsData[step.category] || {};
             let lessonPath = null;
             
-            // First check topic-specific file
             if (catData.topics && catData.topics[step.topic]) {
                 lessonPath = catData.topics[step.topic];
-            }
-            // Fallback to category intro
-            if (!lessonPath && catData.intro) {
+            } else if (catData.intro) {
                 lessonPath = catData.intro;
             }
-            
+
             if (lessonPath) {
-                // Point iframe to the HTML file
-                // If it starts with fundamentals/ or is already a data/ path, use as is. 
-                // Otherwise prepend data/
-                if (lessonPath.startsWith('fundamentals/') || lessonPath.startsWith('data/')) {
-                    learningFrame.src = lessonPath;
+                const fullPath = (lessonPath.startsWith('fundamentals/') || lessonPath.startsWith('data/')) 
+                    ? lessonPath 
+                    : `data/${lessonPath}`;
+
+                if (fullPath.endsWith('.md')) {
+                    // Fetch and Render Markdown
+                    fetch(fullPath + '?_t=' + new Date().getTime())
+                        .then(res => res.text())
+                        .then(md => {
+                            const html = typeof marked !== 'undefined' ? marked.parse(md) : `<pre>${md}</pre>`;
+                            learningFrame.srcdoc = `
+                                <!DOCTYPE html>
+                                <html>
+                                <head>
+                                    <link rel="stylesheet" href="../../../style.css">
+                                    <style>
+                                        body { 
+                                            background: white; 
+                                            color: #1e293b; 
+                                            padding: 32px; 
+                                            font-family: -apple-system, sans-serif;
+                                            line-height: 1.6;
+                                        }
+                                        .markdown-content blockquote {
+                                            margin: 24px 0;
+                                            padding: 16px;
+                                            border-left: 4px solid var(--border-color);
+                                            border-radius: 0 8px 8px 0;
+                                            background: rgba(0,0,0,0.02);
+                                        }
+                                    </style>
+                                </head>
+                                <body class="markdown-content">
+                                    ${html}
+                                </body>
+                                </html>
+                            `;
+                        });
+
+                    // Update Interactive Button to point to the .html version
+                    if (learningLaunchInteractive) {
+                        learningLaunchInteractive.style.display = 'block';
+                        const interactiveLink = learningLaunchInteractive.querySelector('a');
+                        if (interactiveLink) {
+                            interactiveLink.href = fullPath.replace('.md', '.html');
+                        }
+                    }
                 } else {
-                    learningFrame.src = `data/${lessonPath}`;
+                    // Load HTML directly in iframe
+                    learningFrame.src = fullPath;
+                    if (learningLaunchInteractive) learningLaunchInteractive.style.display = 'none';
                 }
             } else {
-                // Show a helpful error within the iframe if possible, or just blank
-                console.warn(`No lesson HTML found for ${step.topic}`);
-                learningFrame.srcdoc = `<html><body style="font-family: sans-serif; padding: 40px; text-align: center; color: #666;">
-                    <h3>Lesson Coming Soon</h3>
-                    <p>No HTML content is mapped for <b>${step.topic}</b> yet.</p>
-                </body></html>`;
+                learningFrame.srcdoc = `<div style="padding:40px; text-align:center; color:#666;"><h3>Coming Soon</h3><p>No content for <b>${step.topic}</b>.</p></div>`;
+                if (learningLaunchInteractive) learningLaunchInteractive.style.display = 'none';
             }
 
         } else {

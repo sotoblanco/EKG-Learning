@@ -1,19 +1,21 @@
-# Lead Reversal
+# Lead Reversal Artifacts
 
-<!-- PROMPT: "Write a guide on EKG lead reversal artifacts for medical students. Include:
+Lead reversal is a common clinical error where electrodes are swapped. Recognizing these patterns avoids misdiagnosing life-threatening conditions or initiating unnecessary treatments.
 
-1. **LA/RA Reversal** (most common): Lead I becomes inverted (negative P and QRS). aVR looks normal. Clue: inverted P in lead I with normal chest leads.
-2. **RA/RL Reversal**: Lead II becomes near-isoelectric (flat). aVR = aVF.
-3. **Precordial Lead Reversal**: Poor R-wave progression or paradoxical R-wave changes across V1-V6.
-4. **Dextrocardia vs Lead Reversal**: How to differentiate — in dextrocardia, chest leads ALSO show abnormalities (decreasing R-wave from V1 to V6).
-5. **How to Detect**: Always check aVR — it should be mostly negative (inverted P, negative QRS). If aVR looks 'normal', suspect reversal.
+## 1. LA/RA Reversal (Most Common)
+The wires for the Left and Right arms are swapped.
+- **Lead I:** Completely inverted (Negative P wave, Negative QRS).
+- **Lead aVR:** Often looks "normal" (upright P and QRS), which is a huge red flag!
+- **Chest Leads (V1-V6):** Remain normal.
 
-Include examples and clinical tips." -->
+> [!WARNING]
+> **The "aVR Rule":** In a normal EKG, `aVR` should **always** be negative. If `aVR` shows an upright P-wave and QRS, check your limb leads first!
 
-> **This is a placeholder.** Replace with the guide generated from the prompt above.
+## 2. RA/RL Reversal
+Right Arm and Right Leg leads are swapped. This results in Lead II becoming a "flat line" (isoelectric) because it's measuring the distance between the two electrodes on the same leg!
 
-## Topics to Search For
-- EKG lead reversal patterns
-- LA RA reversal EKG findings
-- Dextrocardia vs lead reversal EKG
-- How to detect lead misplacement
+## 3. Precordial Misplacement
+Swapping chest leads (e.g., V1 and V2) causes **poor R-wave progression**. Instead of the R-wave gradually getting taller from V1 to V6, it may jump or drop suddenly.
+
+> [!TIP]
+> **Dextrocardia vs. Lead Reversal:** In Lead Reversal, chest leads look normal. In Dextrocardia, chest leads also show abnormalities (R-waves get smaller from V1 to V6).
