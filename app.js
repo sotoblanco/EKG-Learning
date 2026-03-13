@@ -630,6 +630,7 @@ Click the button below to begin your journey into the world of electrocardiology
                     // Update Interactive Button to point to the .html version
                     if (learningLaunchInteractive) {
                         learningLaunchInteractive.style.display = 'block';
+                        learningLaunchBtn.innerText = `Launch Interactive ${step.topic} →`;
                         learningLaunchBtn.onclick = () => {
                             learningFrame.src = fullPath.replace('.md', '.html');
                             learningLaunchInteractive.style.display = 'none'; // Hide once launched
