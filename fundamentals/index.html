@@ -83,6 +83,49 @@
             overflow: hidden;
             white-space: nowrap;
         }
+
+        /* Coronary Anatomy Diagram */
+        .heart-map {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            position: relative;
+            background: #f1f5f9;
+            border-radius: 50%;
+            border: 4px solid #e2e8f0;
+        }
+        .territory {
+            position: absolute;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        .territory-lad {
+            top: 10%; left: 35%; width: 50%; height: 60%;
+            background: #cbd5e1; /* Neutral */
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%;
+        }
+        .territory-rca {
+            top: 40%; left: 10%; width: 40%; height: 50%;
+            background: #cbd5e1;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            border-radius: 70% 30% 70% 30% / 40% 60% 40% 60%;
+        }
+        .territory-lcx {
+            top: 20%; right: 10%; width: 40%; height: 40%;
+            background: #cbd5e1;
+            border-radius: 30% 70% 40% 60%;
+        }
+        .territory.active-lad { background: #0ea5e9; transform: scale(1.05); z-index: 10; }
+        .territory.active-rca { background: #e11d48; transform: scale(1.05); z-index: 10; }
+        .territory.active-lcx { background: #8b5cf6; transform: scale(1.05); z-index: 10; }
     </style>
 </head>
 <body class="flex flex-col md:flex-row h-screen overflow-hidden">
@@ -97,9 +140,10 @@
             <a href="#intro" class="nav-link block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors">1. What is an EKG?</a>
             <a href="#paper" class="nav-link block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors">2. The EKG Paper</a>
             <a href="#leads" class="nav-link block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors">3. The 12 Leads</a>
-            <a href="#waveform" class="nav-link block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors">4. Normal Waveform</a>
-            <a href="#systematic" class="nav-link block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors">5. Systematic Approach</a>
-            <a href="#artifacts" class="nav-link block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors">6. Common Artifacts</a>
+            <a href="#coronary" class="nav-link block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors">4. Coronary Territories</a>
+            <a href="#waveform" class="nav-link block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors">5. Normal Waveform</a>
+            <a href="#systematic" class="nav-link block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors">6. Systematic Approach</a>
+            <a href="#artifacts" class="nav-link block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors">7. Common Artifacts</a>
             <hr class="border-slate-800 my-2">
             <a href="../index.html" class="block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors font-semibold text-sky-400">&larr; Back to Library</a>
         </div>
@@ -213,9 +257,39 @@
                 </div>
             </section>
 
-            <!-- Section 4: Normal Waveform -->
-            <section id="waveform" class="scroll-mt-10">
+            <!-- Section 4: Coronary Territories -->
+            <section id="coronary" class="scroll-mt-10">
                 <p class="text-sm font-semibold text-rose-600 uppercase tracking-wider mb-2">Section 4</p>
+                <h2 class="text-4xl font-bold text-slate-900 mb-6">Coronary Anatomy & EKG Leads</h2>
+                <p class="text-lg text-slate-700 mb-8">
+                    Understanding which artery supplies which part of the heart is critical for localizing myocardial infarctions (STEMI). Click an artery to see its territory.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+                    <div>
+                        <div class="heart-map">
+                            <div id="diag-lad" onclick="selectArtery('lad')" class="territory territory-lad">LAD</div>
+                            <div id="diag-rca" onclick="selectArtery('rca')" class="territory territory-rca">RCA</div>
+                            <div id="diag-lcx" onclick="selectArtery('lcx')" class="territory territory-lcx">LCX</div>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div id="artery-card" class="p-6 rounded-xl border-2 border-transparent transition-all duration-300 bg-slate-50">
+                            <h3 id="artery-name" class="text-2xl font-bold text-slate-800 mb-2">Select an Artery</h3>
+                            <p id="artery-territory" class="text-slate-600 mb-4 italic">Learn which leads correspond to each major vessel.</p>
+                            <div id="artery-leads" class="flex flex-wrap gap-2"></div>
+                        </div>
+                        
+                        <div class="pearl-box p-4 rounded-r-lg text-sm">
+                            <p><strong>Clinical Correlation:</strong> When you see ST-elevation in specific leads, you can predict which vessel is likely occluded before the patient even goes to the cath lab.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: Normal Waveform -->
+            <section id="waveform" class="scroll-mt-10">
+                <p class="text-sm font-semibold text-rose-600 uppercase tracking-wider mb-2">Section 5</p>
                 <h2 class="text-4xl font-bold text-slate-900 mb-6">The Normal EKG Waveform</h2>
                 <div class="bg-white p-4 rounded-xl shadow-md border border-slate-200 mb-8">
                     <div class="chart-container">
@@ -224,9 +298,9 @@
                 </div>
             </section>
 
-            <!-- Section 5: Systematic Approach -->
+            <!-- Section 6: Systematic Approach -->
             <section id="systematic" class="scroll-mt-10">
-                <p class="text-sm font-semibold text-rose-600 uppercase tracking-wider mb-2">Section 5</p>
+                <p class="text-sm font-semibold text-rose-600 uppercase tracking-wider mb-2">Section 6</p>
                 <h2 class="text-4xl font-bold text-slate-900 mb-6">Systematic Approach</h2>
                 <div class="space-y-3">
                     <details class="group border border-slate-200 rounded-lg bg-white overflow-hidden" open>
@@ -244,9 +318,9 @@
                 </div>
             </section>
 
-            <!-- Section 6: Common Artifacts -->
+            <!-- Section 7: Common Artifacts -->
             <section id="artifacts" class="scroll-mt-10">
-                <p class="text-sm font-semibold text-rose-600 uppercase tracking-wider mb-2">Section 6</p>
+                <p class="text-sm font-semibold text-rose-600 uppercase tracking-wider mb-2">Section 7</p>
                 <h2 class="text-4xl font-bold text-slate-900 mb-6">Common Artifacts</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-12">
                     <div class="bg-white border p-5 rounded-lg">
@@ -309,7 +383,63 @@
             }
         }
 
-        const leadGroups = { inferior: ['II', 'III', 'aVF'], lateral: ['I', 'aVL', 'V5', 'V6'], septal: ['V1', 'V2'], anterior: ['V3', 'V4'] };
+        const leadGroups = { 
+            inferior: ['II', 'III', 'aVF'], 
+            lateral: ['I', 'aVL', 'V5', 'V6'], 
+            septal: ['V1', 'V2'], 
+            anterior: ['V3', 'V4'] 
+        };
+        const arteryMap = {
+            lad: {
+                name: "Left Anterior Descending (LAD)",
+                territory: "Anterior wall and Septum of the LV. Focus of the 'Widowmaker' infarction.",
+                leads: ['V1', 'V2', 'V3', 'V4'],
+                color: 'active-lad'
+            },
+            rca: {
+                name: "Right Coronary Artery (RCA)",
+                territory: "Inferior wall of the LV and the Right Ventricle. Supplies the SA and AV nodes in most people.",
+                leads: ['II', 'III', 'aVF'],
+                color: 'active-rca'
+            },
+            lcx: {
+                name: "Left Circumflex (LCx)",
+                territory: "Lateral wall of the Left Ventricle.",
+                leads: ['I', 'aVL', 'V5', 'V6'],
+                color: 'active-lcx'
+            }
+        };
+
+        function selectArtery(id) {
+            const data = arteryMap[id];
+            
+            // Highlight Diag
+            document.querySelectorAll('.territory').forEach(t => t.className = t.className.replace(/active-\w+/g, ''));
+            document.getElementById(`diag-${id}`).classList.add(data.color);
+
+            // Update Card
+            const card = document.getElementById('artery-card');
+            card.className = `p-6 rounded-xl border-2 transition-all duration-300 ${data.color === 'active-lad' ? 'border-sky-500 bg-sky-50' : data.color === 'active-rca' ? 'border-rose-500 bg-rose-50' : 'border-purple-500 bg-purple-50'}`;
+            document.getElementById('artery-name').textContent = data.name;
+            document.getElementById('artery-territory').textContent = data.territory;
+            
+            // Build Lead List
+            const leadList = document.getElementById('artery-leads');
+            leadList.innerHTML = data.leads.map(l => `<span class="px-3 py-1 bg-white border border-current rounded-full text-xs font-bold">${l}</span>`).join('');
+
+            // Cross-highlight 12 Leads section
+            highlightLeadsByList(data.leads, data.color.split('-')[1]);
+        }
+
+        function highlightLeadsByList(leads, colorName) {
+            document.querySelectorAll('.lead-box').forEach(box => box.className = box.className.replace(/bg-\w+-500|text-white|scale-105/g, '') + ' bg-slate-50 text-slate-800');
+            const colors = { lad: 'bg-sky-500', rca: 'bg-rose-500', lcx: 'bg-purple-500' };
+            leads.forEach(lead => {
+                const el = document.querySelector(`.lead-box.${lead}`);
+                if(el) el.className = el.className.replace('bg-slate-50', colors[colorName]) + ' text-white scale-105';
+            });
+        }
+
         function highlightLeads(group) {
             document.querySelectorAll('.lead-box').forEach(box => box.className = box.className.replace(/bg-\w+-500|text-white|scale-105/g, '') + ' bg-slate-50 text-slate-800');
             const colors = { inferior: 'bg-rose-500', lateral: 'bg-blue-500', septal: 'bg-emerald-500', anterior: 'bg-amber-500' };
