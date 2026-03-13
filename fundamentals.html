@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EKG Fundamentals: A Clinical Guide</title>
+    
+    <!-- Chosen Palette: Clinical Warmth (Slate-50 bg, Rose-600 accents, Sky-700 secondary, Slate-800 text) -->
+    <!-- Application Structure Plan: 
+         A side-navigation SPA layout (Top nav on mobile) to allow sequential or non-linear learning, mimicking a textbook's chapters. 
+         The main content area is divided into 6 distinct sections matching the requested topics. 
+         Interactivity includes: a scroll-spy navigation, an interactive CSS-based EKG paper simulator, 
+         a clickable 'Lead Views' anatomical map (using CSS Grid, no SVG), an interactive Chart.js EKG waveform with tooltips, 
+         and accordion-style systematic approach steps to prevent cognitive overload. 
+         This structure ensures medical students can digest complex information at their own pace. -->
+    <!-- Visualization & Content Choices: 
+         - Intro: Animated CSS pulse to engage visually. 
+         - EKG Paper: CSS repeating-linear-gradients used to create accurate 1mm and 5mm grid boxes. JS used to toggle dimension overlays. NO SVG.
+         - 12 Leads: CSS Grid layout representing standard anatomical views. JS highlights related leads (e.g., Inferior, Anterior) on click.
+         - Normal Waveform: Chart.js Line chart used to plot an idealized EKG cycle. Hover interactions provide detailed specs (duration, amplitude) for P, QRS, T, etc. NO SVG.
+         - Systematic Approach: HTML/CSS Accordions (Details/Summary or JS driven) to step through the interpretation process methodically (Dubin style).
+         - Artifacts: CSS-styled blocks simulating noise/tremor visually using keyframes or text-based squiggles. 
+         - ALL graphics rely on Canvas (Chart.js), CSS, or Unicode. NO SVG. NO Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Chart Container Requirements */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 40vh;
+            max-height: 400px;
+            min-height: 300px;
+        }
+
+        /* EKG Paper Simulation (CSS Only) */
+        .ekg-paper-bg {
+            background-color: #fff;
+            background-image: 
+                linear-gradient(rgba(225, 29, 72, 0.4) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(225, 29, 72, 0.4) 1px, transparent 1px),
+                linear-gradient(rgba(225, 29, 72, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(225, 29, 72, 0.15) 1px, transparent 1px);
+            background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px; /* Scaled up for screen visibility */
+            border: 1px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Custom Scrollbar for TOC */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Clinical Pearl Box */
+        .pearl-box {
+            border-left: 4px solid #0369a1;
+            background-color: #f0f9ff;
+        }
+
+        /* Dubin Rule Box */
+        .dubin-box {
+            border: 2px dashed #e11d48;
+            background-color: #fff1f2;
+        }
+
+        .active-nav {
+            background-color: #e11d48;
+            color: white !important;
+            font-weight: 600;
+        }
+
+        /* Heart CSS Animation */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.15); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            60% { transform: scale(1); }
+        }
+        .heart-icon {
+            display: inline-block;
+            color: #e11d48;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        /* Artifact Simulation */
+        .artifact-tremor {
+            font-family: monospace;
+            letter-spacing: -2px;
+            color: #ef4444;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row h-screen overflow-hidden">
+
+    <!-- Navigation Sidebar -->
+    <nav class="w-full md:w-64 bg-slate-900 text-slate-300 flex-shrink-0 h-auto md:h-full flex flex-col z-20 shadow-xl">
+        <div class="p-6 bg-slate-950 flex items-center justify-between md:block">
+            <h1 class="text-2xl font-bold text-white tracking-tight"><span class="heart-icon mr-2">&#10084;</span>EKG Guide</h1>
+            <button id="mobile-menu-btn" class="md:hidden text-slate-300 hover:text-white text-2xl px-2">&#9776;</button>
+        </div>
+        <div id="nav-links" class="hidden md:flex flex-col flex-1 overflow-y-auto py-4 text-sm">
+            <a href="#intro" class="nav-link block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors">1. What is an EKG?</a>
+            <a href="#paper" class="nav-link block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors">2. The EKG Paper</a>
+            <a href="#leads" class="nav-link block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors">3. The 12 Leads</a>
+            <a href="#waveform" class="nav-link block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors">4. Normal Waveform</a>
+            <a href="#systematic" class="nav-link block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors">5. Systematic Approach</a>
+            <a href="#artifacts" class="nav-link block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors">6. Common Artifacts</a>
+            <hr class="border-slate-800 my-2">
+            <a href="index.html" class="block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors font-semibold text-sky-400">&larr; Back to Library</a>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 overflow-y-auto p-4 md:p-10 scroll-smooth" id="main-content">
+        <div class="max-w-4xl mx-auto space-y-24 pb-32">
+
+            <!-- Section 1: Intro -->
+            <section id="intro" class="scroll-mt-10">
+                <p class="text-sm font-semibold text-rose-600 uppercase tracking-wider mb-2">Section 1</p>
+                <h2 class="text-4xl font-bold text-slate-900 mb-6">What is an EKG?</h2>
+                <div class="prose prose-slate max-w-none text-lg">
+                    <p class="mb-4">
+                        The <strong>Electrocardiogram (EKG or ECG)</strong> is a graphical recording of the electrical activity of the heart over time. It is captured using surface electrodes placed on the skin of the chest and limbs.
+                    </p>
+                    <p class="mb-6">
+                        Before the heart muscle actually contracts (mechanical activity), an electrical signal propagates through it. The EKG "listens" to this electrical wave from different angles, allowing us to diagnose arrhythmias, infarctions, blocks, and hypertrophy.
+                    </p>
+                    
+                    <div class="dubin-box p-6 rounded-lg shadow-sm mb-6 text-center">
+                        <p class="text-xl font-medium text-slate-800 mb-2">The Golden Rule of EKG:</p>
+                        <p class="text-lg text-rose-700">Electrical activity <strong>precedes</strong> mechanical contraction.</p>
+                        <p class="text-sm text-slate-600 mt-2">(The EKG shows the electricity, not the actual pumping of blood!)</p>
+                    </div>
+
+                    <div class="pearl-box p-5 rounded-r-lg">
+                        <h4 class="font-bold text-sky-800 flex items-center"><span class="mr-2 text-xl">&#128161;</span> Clinical Pearl</h4>
+                        <p class="text-slate-700 mt-1 text-base">Always treat the <strong>patient</strong>, not the paper. If the EKG shows a flatline (asystole) but the patient is sitting up and talking to you, check your lead connections! Artifacts and disconnected leads happen frequently.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: EKG Paper -->
+            <section id="paper" class="scroll-mt-10">
+                <p class="text-sm font-semibold text-rose-600 uppercase tracking-wider mb-2">Section 2</p>
+                <h2 class="text-4xl font-bold text-slate-900 mb-6">The EKG Paper</h2>
+                <p class="text-lg text-slate-700 mb-6">
+                    EKG paper is a standardized grid. Understanding this grid is mandatory for calculating heart rate and diagnosing blocks. The horizontal axis represents <strong>time</strong>, and the vertical axis represents <strong>voltage (amplitude)</strong>.
+                </p>
+
+                <!-- Interactive Paper Simulator -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 mb-8">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="w-full md:w-1/2">
+                            <div class="ekg-paper-bg h-48 w-full rounded cursor-pointer relative" id="interactive-paper">
+                                <!-- Overlays added via JS -->
+                                <div id="paper-highlight" class="absolute hidden border-2 border-slate-900 bg-blue-500 bg-opacity-20 transition-all duration-300"></div>
+                            </div>
+                            <p class="text-center text-xs text-slate-500 mt-2">Graphic scaled for screen visibility. Standard speed = 25mm/s.</p>
+                        </div>
+                        <div class="w-full md:w-1/2 flex flex-col justify-center gap-4">
+                            <button onclick="highlightBox('small')" class="w-full py-3 px-4 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded text-left transition flex justify-between items-center group">
+                                <span><strong class="text-rose-600">Small Box</strong> (1mm)</span>
+                                <span class="text-sm opacity-0 group-hover:opacity-100 transition">Click to view &rarr;</span>
+                            </button>
+                            <button onclick="highlightBox('large')" class="w-full py-3 px-4 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded text-left transition flex justify-between items-center group">
+                                <span><strong class="text-rose-600">Large Box</strong> (5mm)</span>
+                                <span class="text-sm opacity-0 group-hover:opacity-100 transition">Click to view &rarr;</span>
+                            </button>
+                            
+                            <div id="box-details" class="p-4 bg-sky-50 rounded border border-sky-100 min-h-[100px]">
+                                <p class="text-slate-600 italic text-sm">Select a box size to see its standard measurements in time and voltage.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <ul class="list-disc pl-6 space-y-2 text-slate-700">
+                        <li><strong>Standard Paper Speed:</strong> 25 mm/sec.</li>
+                        <li><strong>Standard Calibration:</strong> 10 mm / 1 mV. Look for the calibration box at the start of the EKG (it should be 2 large boxes high).</li>
+                    </ul>
+                    <div class="dubin-box p-4 rounded-lg">
+                        <p class="font-bold mb-1">Memorize this:</p>
+                        <p>1 Small Box = <strong>0.04 seconds</strong></p>
+                        <p>1 Large Box = 5 small boxes = <strong>0.20 seconds</strong></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: The 12 Leads -->
+            <section id="leads" class="scroll-mt-10">
+                <p class="text-sm font-semibold text-rose-600 uppercase tracking-wider mb-2">Section 3</p>
+                <h2 class="text-4xl font-bold text-slate-900 mb-6">The 12 Leads</h2>
+                <p class="text-lg text-slate-700 mb-6">
+                    A "lead" is not a physical wire; it's a specific "camera angle" looking at the heart's electrical vector. A 12-lead EKG uses 10 physical electrodes to create 12 distinct views.
+                </p>
+
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 mb-6">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 border-b pb-2">Interactive Lead Groupings</h3>
+                    <p class="text-sm text-slate-600 mb-4">Click an anatomical region to highlight the corresponding leads that "look" at that part of the heart.</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <button onclick="highlightLeads('inferior')" class="px-4 py-2 bg-slate-100 hover:bg-rose-100 hover:text-rose-800 text-slate-700 rounded transition font-medium text-sm focus:outline-none focus:ring-2 ring-rose-500">Inferior Wall</button>
+                        <button onclick="highlightLeads('lateral')" class="px-4 py-2 bg-slate-100 hover:bg-blue-100 hover:text-blue-800 text-slate-700 rounded transition font-medium text-sm focus:outline-none focus:ring-2 ring-blue-500">Lateral Wall</button>
+                        <button onclick="highlightLeads('septal')" class="px-4 py-2 bg-slate-100 hover:bg-emerald-100 hover:text-emerald-800 text-slate-700 rounded transition font-medium text-sm focus:outline-none focus:ring-2 ring-emerald-500">Septal Wall</button>
+                        <button onclick="highlightLeads('anterior')" class="px-4 py-2 bg-slate-100 hover:bg-amber-100 hover:text-amber-800 text-slate-700 rounded transition font-medium text-sm focus:outline-none focus:ring-2 ring-amber-500">Anterior Wall</button>
+                        <button onclick="highlightLeads('reset')" class="px-4 py-2 text-slate-500 hover:text-slate-800 text-sm ml-auto underline">Reset</button>
+                    </div>
+
+                    <!-- 12 Lead Grid Representation -->
+                    <div class="grid grid-cols-4 gap-4 text-center">
+                        <!-- Limb Leads -->
+                        <div class="lead-box I p-4 border rounded-lg bg-slate-50 font-bold font-mono transition-colors duration-300">I</div>
+                        <div class="lead-box aVR p-4 border rounded-lg bg-slate-50 font-bold font-mono transition-colors duration-300">aVR</div>
+                        <div class="lead-box V1 p-4 border rounded-lg bg-slate-50 font-bold font-mono transition-colors duration-300">V1</div>
+                        <div class="lead-box V4 p-4 border rounded-lg bg-slate-50 font-bold font-mono transition-colors duration-300">V4</div>
+                        
+                        <div class="lead-box II p-4 border rounded-lg bg-slate-50 font-bold font-mono transition-colors duration-300">II</div>
+                        <div class="lead-box aVL p-4 border rounded-lg bg-slate-50 font-bold font-mono transition-colors duration-300">aVL</div>
+                        <div class="lead-box V2 p-4 border rounded-lg bg-slate-50 font-bold font-mono transition-colors duration-300">V2</div>
+                        <div class="lead-box V5 p-4 border rounded-lg bg-slate-50 font-bold font-mono transition-colors duration-300">V5</div>
+                        
+                        <div class="lead-box III p-4 border rounded-lg bg-slate-50 font-bold font-mono transition-colors duration-300">III</div>
+                        <div class="lead-box aVF p-4 border rounded-lg bg-slate-50 font-bold font-mono transition-colors duration-300">aVF</div>
+                        <div class="lead-box V3 p-4 border rounded-lg bg-slate-50 font-bold font-mono transition-colors duration-300">V3</div>
+                        <div class="lead-box V6 p-4 border rounded-lg bg-slate-50 font-bold font-mono transition-colors duration-300">V6</div>
+                    </div>
+                    <div id="lead-description" class="mt-4 p-4 bg-slate-50 rounded text-sm text-slate-700 hidden"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                    <div>
+                        <h4 class="font-bold text-slate-800 mb-2 border-b pb-1">The 6 Limb Leads (Vertical Plane)</h4>
+                        <ul class="list-disc pl-5 text-slate-700 space-y-1 text-sm">
+                            <li><strong>I, II, III:</strong> Bipolar leads forming Einthoven's Triangle.</li>
+                            <li><strong>aVR, aVL, aVF:</strong> Augmented unipolar leads.</li>
+                            <li><em>aVR is the "lonely" lead. Everything usually looks upside down in aVR because it looks at the heart from the right shoulder.</em></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 mb-2 border-b pb-1">The 6 Precordial Leads (Horizontal Plane)</h4>
+                        <ul class="list-disc pl-5 text-slate-700 space-y-1 text-sm">
+                            <li>Placed directly on the chest.</li>
+                            <li><strong>V1, V2:</strong> Right side of the septum.</li>
+                            <li><strong>V3, V4:</strong> Anterior wall of Left Ventricle.</li>
+                            <li><strong>V5, V6:</strong> Lateral wall of Left Ventricle.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Normal Waveform -->
+            <section id="waveform" class="scroll-mt-10">
+                <p class="text-sm font-semibold text-rose-600 uppercase tracking-wider mb-2">Section 4</p>
+                <h2 class="text-4xl font-bold text-slate-900 mb-6">The Normal EKG Waveform</h2>
+                <p class="text-lg text-slate-700 mb-6">
+                    A single cardiac cycle produces a predictable series of waves. Hover over the points on the graph below to understand what each electrical segment represents anatomically.
+                </p>
+
+                <div class="bg-white p-4 rounded-xl shadow-md border border-slate-200 mb-8">
+                    <!-- Chart Container (Required Styling) -->
+                    <div class="chart-container">
+                        <canvas id="ekgChart"></canvas>
+                    </div>
+                    <p class="text-center text-xs text-slate-500 mt-4">Interactive Idealized Normal Sinus Rhythm Complex.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                    <div class="border-l-4 border-rose-500 pl-4 py-1">
+                        <h4 class="font-bold text-slate-800 text-lg">P Wave</h4>
+                        <p class="text-sm text-slate-600">Atrial depolarization (contraction). <br><strong>Normal:</strong> &lt; 120ms duration (3 small boxes), &lt; 2.5mm amplitude. Upright in II, inverted in aVR.</p>
+                    </div>
+                    <div class="border-l-4 border-blue-500 pl-4 py-1">
+                        <h4 class="font-bold text-slate-800 text-lg">PR Interval</h4>
+                        <p class="text-sm text-slate-600">From start of P to start of QRS. Represents delay at the AV node allowing ventricles to fill. <br><strong>Normal:</strong> 120-200ms (3-5 small boxes).</p>
+                    </div>
+                    <div class="border-l-4 border-emerald-500 pl-4 py-1">
+                        <h4 class="font-bold text-slate-800 text-lg">QRS Complex</h4>
+                        <p class="text-sm text-slate-600">Ventricular depolarization. <br><strong>Normal:</strong> &lt; 120ms (&lt; 3 small boxes). Q = first negative, R = first positive, S = negative after R.</p>
+                    </div>
+                    <div class="border-l-4 border-amber-500 pl-4 py-1">
+                        <h4 class="font-bold text-slate-800 text-lg">ST Segment</h4>
+                        <p class="text-sm text-slate-600">End of S to start of T. Normally isoelectric (flat on baseline). <br><span class="text-rose-600 font-bold">Elevation</span> = Transmural Injury (STEMI). <span class="text-blue-600 font-bold">Depression</span> = Subendocardial ischemia.</p>
+                    </div>
+                    <div class="border-l-4 border-purple-500 pl-4 py-1">
+                        <h4 class="font-bold text-slate-800 text-lg">T Wave</h4>
+                        <p class="text-sm text-slate-600">Ventricular repolarization. Usually upright where the QRS is upright.</p>
+                    </div>
+                    <div class="border-l-4 border-slate-400 pl-4 py-1">
+                        <h4 class="font-bold text-slate-800 text-lg">QT Interval</h4>
+                        <p class="text-sm text-slate-600">Total ventricular activity time. Varies with heart rate. Must use corrected QT (QTc, Bazett formula). Prolonged QTc &rarr; risk of Torsades de Pointes.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: Systematic Approach -->
+            <section id="systematic" class="scroll-mt-10">
+                <p class="text-sm font-semibold text-rose-600 uppercase tracking-wider mb-2">Section 5</p>
+                <h2 class="text-4xl font-bold text-slate-900 mb-6">Systematic Approach</h2>
+                <p class="text-lg text-slate-700 mb-6">
+                    Never jump straight to the ST segments! Always read an EKG using the same systematic order to avoid missing subtle diagnoses. Click each step below.
+                </p>
+
+                <div class="space-y-3" id="accordion-container">
+                    <!-- JS will populate accordions here to keep HTML clean, or we can hardcode for semantics. Let's hardcode for better no-js fallback. -->
+                    
+                    <details class="group border border-slate-200 rounded-lg bg-white shadow-sm overflow-hidden" open>
+                        <summary class="flex items-center justify-between cursor-pointer p-4 font-bold text-lg text-slate-800 bg-slate-50 hover:bg-slate-100 transition">
+                            <span>1. Rate</span>
+                            <span class="text-rose-600 group-open:rotate-180 transition-transform duration-300">&#9660;</span>
+                        </summary>
+                        <div class="p-4 border-t border-slate-200 text-slate-700">
+                            <p class="mb-2"><strong>Normal:</strong> 60 - 100 bpm.</p>
+                            <p class="mb-2"><strong>Rule of 300 (Regular Rhythm):</strong> 300 / (Number of large boxes between R waves).<br>
+                               <span class="text-sm text-slate-500">Sequence: 300 - 150 - 100 - 75 - 60 - 50</span></p>
+                            <p><strong>10 Second Rule (Irregular Rhythm):</strong> Count total R waves in a 10-second strip and multiply by 6.</p>
+                        </div>
+                    </details>
+
+                    <details class="group border border-slate-200 rounded-lg bg-white shadow-sm overflow-hidden">
+                        <summary class="flex items-center justify-between cursor-pointer p-4 font-bold text-lg text-slate-800 bg-slate-50 hover:bg-slate-100 transition">
+                            <span>2. Rhythm</span>
+                            <span class="text-rose-600 group-open:rotate-180 transition-transform duration-300">&#9660;</span>
+                        </summary>
+                        <div class="p-4 border-t border-slate-200 text-slate-700">
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li>Is it regular or irregular?</li>
+                                <li>Is there a P wave before every QRS?</li>
+                                <li>Is there a QRS after every P wave?</li>
+                                <li>Are the P waves upright in II, III, and aVF? (Indicates normal Sinus Rhythm origin).</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                    <details class="group border border-slate-200 rounded-lg bg-white shadow-sm overflow-hidden">
+                        <summary class="flex items-center justify-between cursor-pointer p-4 font-bold text-lg text-slate-800 bg-slate-50 hover:bg-slate-100 transition">
+                            <span>3. Axis</span>
+                            <span class="text-rose-600 group-open:rotate-180 transition-transform duration-300">&#9660;</span>
+                        </summary>
+                        <div class="p-4 border-t border-slate-200 text-slate-700">
+                            <p class="mb-2">The general direction of electrical travel. Look at Leads <strong>I</strong> and <strong>aVF</strong>.</p>
+                            <ul class="space-y-2 text-sm bg-slate-50 p-4 rounded border">
+                                <li><span class="text-xl inline-block w-6 text-center">&#128077;</span> Lead I (+) & <span class="text-xl inline-block w-6 text-center">&#128077;</span> aVF (+) = <strong>Normal Axis</strong> (Two thumbs up!)</li>
+                                <li><span class="text-xl inline-block w-6 text-center">&#128077;</span> Lead I (+) & <span class="text-xl inline-block w-6 text-center rotate-180">&#128077;</span> aVF (-) = <strong>Left Axis Deviation</strong> (Thumbs leaving each other)</li>
+                                <li><span class="text-xl inline-block w-6 text-center rotate-180">&#128077;</span> Lead I (-) & <span class="text-xl inline-block w-6 text-center">&#128077;</span> aVF (+) = <strong>Right Axis Deviation</strong> (Thumbs reaching toward each other)</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                    <details class="group border border-slate-200 rounded-lg bg-white shadow-sm overflow-hidden">
+                        <summary class="flex items-center justify-between cursor-pointer p-4 font-bold text-lg text-slate-800 bg-slate-50 hover:bg-slate-100 transition">
+                            <span>4. Intervals</span>
+                            <span class="text-rose-600 group-open:rotate-180 transition-transform duration-300">&#9660;</span>
+                        </summary>
+                        <div class="p-4 border-t border-slate-200 text-slate-700">
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li><strong>PR Interval:</strong> Is it &gt; 200ms? (1st Degree AV Block). Is it short? (WPW syndrome).</li>
+                                <li><strong>QRS Width:</strong> Is it &gt; 120ms? (Bundle Branch Block or ventricular origin).</li>
+                                <li><strong>QTc:</strong> Is it &gt; 440ms (men) / 460ms (women)?</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                    <details class="group border border-slate-200 rounded-lg bg-white shadow-sm overflow-hidden">
+                        <summary class="flex items-center justify-between cursor-pointer p-4 font-bold text-lg text-slate-800 bg-slate-50 hover:bg-slate-100 transition">
+                            <span>5. Hypertrophy</span>
+                            <span class="text-rose-600 group-open:rotate-180 transition-transform duration-300">&#9660;</span>
+                        </summary>
+                        <div class="p-4 border-t border-slate-200 text-slate-700">
+                            <p class="mb-2"><strong>Left Ventricular Hypertrophy (LVH) Voltage Criteria (Sokolow-Lyon):</strong></p>
+                            <p class="bg-rose-50 text-rose-800 p-3 rounded font-mono text-sm inline-block">S in V1 + R in V5 or V6 &ge; 35 mm</p>
+                        </div>
+                    </details>
+
+                    <details class="group border border-slate-200 rounded-lg bg-white shadow-sm overflow-hidden">
+                        <summary class="flex items-center justify-between cursor-pointer p-4 font-bold text-lg text-slate-800 bg-slate-50 hover:bg-slate-100 transition">
+                            <span>6. Ischemia / Infarction</span>
+                            <span class="text-rose-600 group-open:rotate-180 transition-transform duration-300">&#9660;</span>
+                        </summary>
+                        <div class="p-4 border-t border-slate-200 text-slate-700">
+                            <p class="mb-2">Look for ST segment changes, T wave inversions, and pathological Q waves.</p>
+                            <ul class="list-disc pl-5">
+                                <li><strong>Ischemia:</strong> Symmetrical T wave inversion, ST depression.</li>
+                                <li><strong>Injury (Acute Infarct):</strong> ST segment elevation (STEMI).</li>
+                                <li><strong>Necrosis (Old Infarct):</strong> Pathologic Q waves (deep and wide).</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Section 6: Common Artifacts -->
+            <section id="artifacts" class="scroll-mt-10">
+                <p class="text-sm font-semibold text-rose-600 uppercase tracking-wider mb-2">Section 6</p>
+                <h2 class="text-4xl font-bold text-slate-900 mb-6">Common Artifacts</h2>
+                <p class="text-lg text-slate-700 mb-6">
+                    Not everything that wiggles is a dangerous arrhythmia. Recognizing artifacts prevents unnecessary panics and treatments.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- Muscle Tremor -->
+                    <div class="bg-white border border-slate-200 p-5 rounded-lg shadow-sm">
+                        <h4 class="font-bold text-slate-800 mb-2 border-b pb-2">Muscle Tremor (Somatic)</h4>
+                        <div class="bg-rose-50 p-2 mb-3 rounded artifact-tremor">
+                            /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+                        </div>
+                        <p class="text-sm text-slate-600">Patient is cold, shivering, or has Parkinson's. The baseline is fuzzy and erratic. <em>Fix: Warm the patient, ask them to relax.</em></p>
+                    </div>
+
+                    <!-- Wandering Baseline -->
+                    <div class="bg-white border border-slate-200 p-5 rounded-lg shadow-sm">
+                        <h4 class="font-bold text-slate-800 mb-2 border-b pb-2">Wandering Baseline</h4>
+                        <div class="bg-slate-50 p-2 mb-3 rounded font-mono text-center text-slate-500 overflow-hidden" style="white-space: nowrap;">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&mdash;&mdash;&macr;&macr;&mdash;&mdash;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;__&mdash;&mdash;
+                        </div>
+                        <p class="text-sm text-slate-600">The entire EKG tracing waves up and down. Usually caused by breathing (respiratory variation) or loose electrodes. <em>Fix: Secure electrodes, ensure good skin contact.</em></p>
+                    </div>
+
+                    <!-- 60 Hz -->
+                    <div class="bg-white border border-slate-200 p-5 rounded-lg shadow-sm">
+                        <h4 class="font-bold text-slate-800 mb-2 border-b pb-2">60 Hz AC Interference</h4>
+                        <div class="bg-slate-50 p-2 mb-3 rounded font-mono text-center text-slate-400" style="letter-spacing: -1px;">
+                            ||||||||||||||||||||||||||||||||
+                        </div>
+                        <p class="text-sm text-slate-600">Thick, perfectly regular fuzzy baseline caused by electrical interference from nearby equipment or lights. <em>Fix: Unplug non-essential equipment, use EKG machine filters.</em></p>
+                    </div>
+
+                    <!-- Lead Reversal -->
+                    <div class="bg-white border border-slate-200 p-5 rounded-lg shadow-sm">
+                        <h4 class="font-bold text-slate-800 mb-2 border-b pb-2">Limb Lead Reversal</h4>
+                        <div class="bg-slate-50 p-2 mb-3 rounded text-center font-bold text-slate-700">
+                            Lead I looks inverted!
+                        </div>
+                        <p class="text-sm text-slate-600">Most commonly Right Arm and Left Arm are swapped. P, QRS, and T are all completely upside down in Lead I. <em>Fix: Check the wire labels and replace properly!</em></p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        // --- 1. Mobile Menu Toggle ---
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.getElementById('nav-links');
+        
+        mobileBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('hidden');
+            navLinks.classList.toggle('absolute');
+            navLinks.classList.toggle('top-16');
+            navLinks.classList.toggle('w-full');
+            navLinks.classList.toggle('bg-slate-900');
+            navLinks.classList.toggle('z-50');
+            navLinks.classList.toggle('shadow-xl');
+        });
+
+        // Hide mobile menu on link click
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if(window.innerWidth < 768) {
+                    navLinks.classList.add('hidden');
+                }
+            });
+        });
+
+        // --- 2. Scroll Spy Navigation ---
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('.nav-link');
+
+        const observerOptions = {
+            root: document.getElementById('main-content'),
+            rootMargin: '0px',
+            threshold: 0.3
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navItems.forEach(item => {
+                        item.classList.remove('active-nav');
+                        if (item.getAttribute('href') === `#${id}`) {
+                            item.classList.add('active-nav');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+
+        // --- 3. Interactive EKG Paper Simulation ---
+        function highlightBox(type) {
+            const paper = document.getElementById('interactive-paper');
+            const highlight = document.getElementById('paper-highlight');
+            const details = document.getElementById('box-details');
+            
+            highlight.classList.remove('hidden');
+            
+            if(type === 'small') {
+                highlight.style.width = '10px'; // Matching the CSS background-size
+                highlight.style.height = '10px';
+                highlight.style.top = '50px';
+                highlight.style.left = '50px';
+                
+                details.innerHTML = `
+                    <h5 class="font-bold text-rose-600 mb-1">Small Box (1mm)</h5>
+                    <p class="text-sm text-slate-700"><strong>Time (Horizontal):</strong> 0.04 seconds (40 ms)</p>
+                    <p class="text-sm text-slate-700"><strong>Voltage (Vertical):</strong> 0.1 mV</p>
+                `;
+                details.className = "p-4 bg-rose-50 rounded border border-rose-100 min-h-[100px] transition-colors";
+            } else {
+                highlight.style.width = '50px'; // Matching the CSS background-size
+                highlight.style.height = '50px';
+                highlight.style.top = '50px';
+                highlight.style.left = '50px';
+                
+                details.innerHTML = `
+                    <h5 class="font-bold text-blue-600 mb-1">Large Box (5mm = 5 small boxes)</h5>
+                    <p class="text-sm text-slate-700"><strong>Time (Horizontal):</strong> 0.20 seconds (200 ms)</p>
+                    <p class="text-sm text-slate-700"><strong>Voltage (Vertical):</strong> 0.5 mV</p>
+                `;
+                details.className = "p-4 bg-blue-50 rounded border border-blue-100 min-h-[100px] transition-colors";
+            }
+        }
+
+        // --- 4. Interactive 12 Lead Highlighting ---
+        const leadGroups = {
+            inferior: ['II', 'III', 'aVF'],
+            lateral: ['I', 'aVL', 'V5', 'V6'],
+            septal: ['V1', 'V2'],
+            anterior: ['V3', 'V4']
+        };
+
+        const groupDescriptions = {
+            inferior: "<strong>Inferior Wall:</strong> Looks at the bottom of the heart, supplied by the Right Coronary Artery (RCA).",
+            lateral: "<strong>Lateral Wall:</strong> Looks at the side of the left ventricle, supplied by the Circumflex Artery (LCx).",
+            septal: "<strong>Septal Wall:</strong> Looks at the ventricular septum, supplied by the Left Anterior Descending (LAD) artery.",
+            anterior: "<strong>Anterior Wall:</strong> Looks at the front of the left ventricle, supplied by the Left Anterior Descending (LAD) artery."
+        };
+
+        function highlightLeads(group) {
+            // Reset all
+            document.querySelectorAll('.lead-box').forEach(box => {
+                box.classList.remove('bg-rose-500', 'bg-blue-500', 'bg-emerald-500', 'bg-amber-500', 'text-white', 'scale-105', 'shadow-md');
+                box.classList.add('bg-slate-50', 'text-slate-800');
+            });
+            
+            const desc = document.getElementById('lead-description');
+            desc.classList.add('hidden');
+
+            if (group === 'reset') return;
+
+            // Highlight specific group
+            let colorClass = '';
+            if(group === 'inferior') colorClass = 'bg-rose-500';
+            if(group === 'lateral') colorClass = 'bg-blue-500';
+            if(group === 'septal') colorClass = 'bg-emerald-500';
+            if(group === 'anterior') colorClass = 'bg-amber-500';
+
+            leadGroups[group].forEach(lead => {
+                const el = document.querySelector(`.lead-box.${lead}`);
+                if(el) {
+                    el.classList.remove('bg-slate-50', 'text-slate-800');
+                    el.classList.add(colorClass, 'text-white', 'scale-105', 'shadow-md');
+                }
+            });
+
+            desc.innerHTML = groupDescriptions[group];
+            desc.classList.remove('hidden');
+        }
+
+        // --- 5. Chart.js Idealized EKG Waveform ---
+        const ctx = document.getElementById('ekgChart').getContext('2d');
+        
+        // Data generation for an idealized EKG wave (Time vs mV)
+        // Approximations to create a recognizable P-QRS-T complex
+        const ekgData = [
+            {x: 0, y: 0, label: 'Isoelectric Baseline'},
+            {x: 40, y: 0, label: 'Isoelectric Baseline'},
+            {x: 80, y: 0.15, label: 'P Wave: Atrial Depolarization'}, // P wave
+            {x: 120, y: 0, label: 'Isoelectric Baseline'},
+            {x: 160, y: 0, label: 'PR Segment: AV Node Delay'}, // PR Segment
+            {x: 200, y: -0.1, label: 'Q Wave: Septal Depolarization'}, // Q wave
+            {x: 220, y: 1.2, label: 'R Wave: Early Ventricular Depolarization'},  // R wave
+            {x: 240, y: -0.2, label: 'S Wave: Late Ventricular Depolarization'}, // S wave
+            {x: 260, y: 0, label: 'J Point / ST Segment Start'},
+            {x: 300, y: 0, label: 'ST Segment: Ventricular Contraction'}, // ST Segment
+            {x: 360, y: 0.35, label: 'T Wave: Ventricular Repolarization'}, // T wave apex
+            {x: 420, y: 0, label: 'End of T Wave'},
+            {x: 500, y: 0, label: 'Isoelectric Baseline'}
+        ];
+
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'EKG Voltage (mV)',
+                    data: ekgData,
+                    borderColor: '#e11d48', // Rose-600
+                    borderWidth: 3,
+                    tension: 0.4, // Smooths the curve (P and T waves)
+                    pointRadius: 6,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#0f172a',
+                    pointHoverRadius: 10,
+                    pointHoverBackgroundColor: '#e11d48'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // CRITICAL for container constraints
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleFont: { size: 14, family: "'Inter', sans-serif" },
+                        bodyFont: { size: 14, family: "'Inter', sans-serif" },
+                        padding: 12,
+                        callbacks: {
+                            title: function(context) {
+                                return context[0].raw.label;
+                            },
+                            label: function(context) {
+                                return `Time: ${context.raw.x}ms | Volt: ${context.raw.y}mV`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'linear',
+                        title: { display: true, text: 'Time (milliseconds)' },
+                        grid: { color: 'rgba(0,0,0,0.05)' },
+                        min: 0,
+                        max: 500
+                    },
+                    y: {
+                        title: { display: true, text: 'Voltage (mV)' },
+                        grid: { color: 'rgba(225, 29, 72, 0.1)' }, // Slight pink grid lines to mimic EKG paper
+                        min: -0.5,
+                        max: 1.5
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    intersect: true,
+                }
+            }
+        });
+
+        // Initialize first nav item
+        document.querySelector('.nav-link').classList.add('active-nav');
+    </script>
+</body>
+</html>
