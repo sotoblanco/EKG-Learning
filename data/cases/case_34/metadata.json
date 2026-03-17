@@ -9,5 +9,14 @@
         "Myocardial Infarction",
         "Pericarditis"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Sinus rhythm",
+        "rate": "79 bpm",
+        "axis": "Normal axis",
+        "intervals": "PR: 160 ms, QRS: 80 ms, QTc: 440 ms",
+        "findings": "Inferior Q-wave myocardial infarction (leads II, III, aVF); diffuse ST-segment elevations in anterior and lateral leads; PR-segment deviations including elevation in aVR and depression in lateral precordial leads",
+        "comparison": "Post-coronary artery bypass graft (CABG) surgery",
+        "impression": "Acute post-operative pericarditis and prior inferior myocardial infarction"
+    }
 }

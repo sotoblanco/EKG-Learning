@@ -8,5 +8,14 @@
     "topics": [
         "Uncategorized"
     ],
-    "category": "Axis"
+    "category": "Axis",
+    "report": {
+        "rhythm": "",
+        "rate": "",
+        "axis": "",
+        "intervals": "",
+        "findings": "",
+        "comparison": "",
+        "impression": ""
+    }
 }

@@ -8,5 +8,14 @@
     "topics": [
         "Right Bundle Branch Block"
     ],
-    "category": "Axis"
+    "category": "Axis",
+    "report": {
+        "rhythm": "",
+        "rate": "",
+        "axis": "",
+        "intervals": "",
+        "findings": "",
+        "comparison": "",
+        "impression": ""
+    }
 }

@@ -8,5 +8,14 @@
     "topics": [
         "Myocardial Infarction"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Normal Sinus Rhythm",
+        "rate": "67 bpm",
+        "axis": "Normal axis",
+        "intervals": "PR: 160ms, QRS: 80ms, QTc: 421ms",
+        "findings": "Subtle ST-segment elevation in inferior (II, III, aVF) and lateral (V5, V6) leads. Reciprocal ST-segment depression in lead aVL. Subtle ST depression in lead V2 suggesting posterior involvement.",
+        "comparison": "N/A",
+        "impression": "Acute infero-latero-posterior myocardial infarction (STEMI) due to circumflex/obtuse marginal artery occlusion."
+    }
 }

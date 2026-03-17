@@ -9,5 +9,14 @@
         "Left Bundle Branch Block",
         "Left Ventricular Hypertrophy"
     ],
-    "category": "Hypertrophy"
+    "category": "Hypertrophy",
+    "report": {
+        "rhythm": "",
+        "rate": "",
+        "axis": "",
+        "intervals": "",
+        "findings": "",
+        "comparison": "",
+        "impression": ""
+    }
 }

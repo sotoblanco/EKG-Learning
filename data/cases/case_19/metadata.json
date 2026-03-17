@@ -8,5 +8,14 @@
     "topics": [
         "Uncategorized"
     ],
-    "category": "Fundamentals"
+    "category": "Fundamentals",
+    "report": {
+        "rhythm": "Sinus rhythm (inferred from normal PR and inverted P waves)",
+        "rate": "N/A",
+        "axis": "Right axis deviation (negative QRS complex in lead I)",
+        "intervals": "PR: Normal; QRS: N/A; QTc: N/A",
+        "findings": "Inverted P waves in leads I and aVL; negative QRS complex and T wave in lead I; progressively decreasing voltage across the precordium; lead II and lead III morphology reversal",
+        "comparison": "Repeat ECG showed same appearance",
+        "impression": "Dextrocardia"
+    }
 }

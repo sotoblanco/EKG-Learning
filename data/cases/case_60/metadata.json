@@ -8,5 +8,14 @@
     "topics": [
         "Pericarditis"
     ],
-    "category": "Diverse disease"
+    "category": "Diverse disease",
+    "report": {
+        "rhythm": "",
+        "rate": "",
+        "axis": "",
+        "intervals": "",
+        "findings": "",
+        "comparison": "",
+        "impression": ""
+    }
 }

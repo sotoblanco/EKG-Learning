@@ -10,5 +10,14 @@
         "Wolff-Parkinson-White",
         "Right Ventricular Hypertrophy"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Sinus rhythm",
+        "rate": "80 bpm",
+        "axis": "Normal axis",
+        "intervals": "PR: ~120 ms, QRS: ~110 ms, QTc: ~415 ms",
+        "findings": "Short PR interval; delta waves (slurred initial QRS deflection) visible in several leads, most prominently V4; tall R wave in V1; negative delta wave in aVL.",
+        "comparison": "N/A",
+        "impression": "Sinus rhythm with a Wolff-Parkinson-White (WPW) pattern, likely due to a left lateral bypass tract."
+    }
 }

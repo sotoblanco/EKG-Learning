@@ -10,5 +10,14 @@
         "Right Bundle Branch Block",
         "Premature Atrial Contractions"
     ],
-    "category": "Rhythm"
+    "category": "Rhythm",
+    "report": {
+        "rhythm": "",
+        "rate": "",
+        "axis": "",
+        "intervals": "",
+        "findings": "",
+        "comparison": "",
+        "impression": ""
+    }
 }

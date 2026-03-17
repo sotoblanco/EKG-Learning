@@ -10,5 +10,14 @@
         "AV Block",
         "Premature Atrial Contractions"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Sinus rhythm with second-degree AV block (Wenckebach/Mobitz Type I) causing 4:3 conduction and ventriculo-phasic sinus arrhythmia",
+        "rate": "N/A",
+        "axis": "N/A",
+        "intervals": "PR: progressive prolongation; QRS: N/A; QTc: N/A",
+        "findings": "Pathologic Q waves and ST elevations in leads II, III, and aVF; Reciprocal ST depressions in leads I, aVL, V2, and V3; Group beating",
+        "comparison": "N/A",
+        "impression": "Acute/evolving inferior ST-elevation myocardial infarction (STEMI) with associated AV Wenckebach block, likely due to dominant right coronary artery occlusion."
+    }
 }

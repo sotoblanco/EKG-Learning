@@ -9,5 +9,14 @@
         "Myocardial Infarction",
         "Left Bundle Branch Block"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Sinus bradycardia",
+        "rate": "50 bpm",
+        "axis": "Left axis deviation",
+        "intervals": "PR: 160 ms, QRS: 160 ms, QTc: ~475 ms",
+        "findings": "Sinus bradycardia; wide QRS complex (>120 ms) with monophasic R waves in leads I and aVL, consistent with Left Bundle Branch Block (LBBB); primary ST-T wave changes consisting of biphasic and inverted T waves in leads II, III, and aVF. In uncomplicated LBBB, T waves in these leads should typically be upright (secondary changes), thus their inversion indicates an underlying ischemic process.",
+        "comparison": "N/A",
+        "impression": "Sinus bradycardia and Left Bundle Branch Block (LBBB) with primary ST-T wave changes in the inferior leads, diagnostic of an evolving inferior myocardial infarction (confirmed by positive cardiac biomarkers)."
+    }
 }

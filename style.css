@@ -439,3 +439,124 @@ body {
 .markdown-content::-webkit-scrollbar-thumb:hover {
     background: var(--text-secondary);
 }
+
+/* --- EKG Report Panel --- */
+.report-panel {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: var(--spacing-md);
+    display: none; /* hidden until populated */
+}
+
+.report-panel h3 {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.report-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm) var(--spacing-md);
+}
+
+.report-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.report-item.wide {
+    grid-column: 1 / -1;
+}
+
+.report-item .report-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.report-item .report-value {
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+.report-item .report-value.not-available {
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* --- Quiz Measurement Section --- */
+.quiz-report-section {
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: rgba(56, 189, 248, 0.05);
+    border: 1px solid rgba(56, 189, 248, 0.15);
+    border-radius: 8px;
+}
+
+.quiz-report-section h4 {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: var(--spacing-md);
+}
+
+.quiz-report-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+}
+
+.quiz-report-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.quiz-report-item label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.quiz-report-item input {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 5px;
+    padding: 6px 8px;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 150ms ease;
+}
+
+.quiz-report-item input:focus {
+    border-color: var(--primary-color);
+}
+
+.quiz-report-item input.quiz-revealed-correct {
+    border-color: #22c55e;
+    background-color: rgba(34, 197, 94, 0.05);
+    color: #86efac;
+}
+
+/* Answer reveal overlay value */
+.quiz-report-item .quiz-answer-reveal {
+    display: none;
+    font-size: 13px;
+    color: #4ade80;
+    font-weight: 500;
+    padding: 4px 0;
+}

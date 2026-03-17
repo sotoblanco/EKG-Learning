@@ -8,5 +8,14 @@
     "topics": [
         "Uncategorized"
     ],
-    "category": "Rhythm"
+    "category": "Rhythm",
+    "report": {
+        "rhythm": "Sinus arrhythmia",
+        "rate": "Approx. 75 bpm (variable due to respiratory sinus arrhythmia)",
+        "axis": "Apparent Right Axis Deviation (Lead I negative, aVF positive)",
+        "intervals": "PR: ~160 ms, QRS: ~80 ms, QTc: ~450 ms",
+        "findings": "Inverted P wave, QRS complex, and T wave in lead I; dissimilarity of QRS morphology between leads I and V6; normal R wave progression in precordial leads; slight J-point and ST-segment elevations consistent with benign early repolarization.",
+        "comparison": "N/A",
+        "impression": "Limb lead reversal (Left Arm/Right Arm); normal variant early repolarization; respiratory sinus arrhythmia."
+    }
 }

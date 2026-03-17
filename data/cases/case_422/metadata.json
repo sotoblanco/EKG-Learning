@@ -10,5 +10,14 @@
         "Hyperkalemia",
         "Long QT Syndrome"
     ],
-    "category": "Rhythm"
+    "category": "Rhythm",
+    "report": {
+        "rhythm": "",
+        "rate": "",
+        "axis": "",
+        "intervals": "",
+        "findings": "",
+        "comparison": "",
+        "impression": ""
+    }
 }

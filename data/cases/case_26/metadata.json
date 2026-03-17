@@ -10,5 +10,14 @@
         "Long QT Syndrome",
         "Left Ventricular Hypertrophy"
     ],
-    "category": "Hypertrophy"
+    "category": "Hypertrophy",
+    "report": {
+        "rhythm": "Sinus rhythm",
+        "rate": "63 bpm",
+        "axis": "Left axis deviation",
+        "intervals": "QRS: 110-120 ms; QTc: ~470 ms",
+        "findings": "Left ventricular hypertrophy (LVH), left atrial abnormality, tall peaked T-waves (consistent with hyperkalemia), non-specific infero-lateral ST depressions, prolonged QTc with stretched-out ST segment (consistent with hypocalcemia), left anterior fascicular block (LAFB).",
+        "comparison": "N/A",
+        "impression": "Findings strongly suggestive of underlying renal failure based on the triad of hyperkalemia (peaked T-waves), hypocalcemia (prolonged QTc), and chronic hypertension (LVH)."
+    }
 }

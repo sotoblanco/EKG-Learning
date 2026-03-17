@@ -9,5 +9,14 @@
         "Ventricular Tachycardia",
         "Right Bundle Branch Block"
     ],
-    "category": "Rhythm"
+    "category": "Rhythm",
+    "report": {
+        "rhythm": "",
+        "rate": "",
+        "axis": "",
+        "intervals": "",
+        "findings": "",
+        "comparison": "",
+        "impression": ""
+    }
 }

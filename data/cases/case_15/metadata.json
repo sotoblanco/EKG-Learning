@@ -11,5 +11,14 @@
         "Wolff-Parkinson-White",
         "Supraventricular Tachycardia"
     ],
-    "category": "Rhythm"
+    "category": "Rhythm",
+    "report": {
+        "rhythm": "Atrial fibrillation with Wolff-Parkinson-White (WPW) syndrome",
+        "rate": "230 beats/min",
+        "axis": "N/A",
+        "intervals": "PR: N/A, QRS: Wide, QTc: N/A",
+        "findings": "Irregularly irregular, extremely rapid rate, wide complex tachycardia, conduction down bypass tract",
+        "comparison": "N/A",
+        "impression": "Atrial fibrillation with WPW syndrome; medical emergency requiring avoidance of AV nodal blockers and treatment with IV procainamide or DC cardioversion"
+    }
 }

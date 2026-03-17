@@ -8,5 +8,14 @@
     "topics": [
         "Atrial Flutter"
     ],
-    "category": "Rhythm"
+    "category": "Rhythm",
+    "report": {
+        "rhythm": "AV Nodal Reentrant Tachycardia (AVNRT)",
+        "rate": "150 bpm",
+        "axis": "Normal axis",
+        "intervals": "PR: variable/short (retrograde); QRS: ~80 ms; QTc: ~410 ms",
+        "findings": "Regular narrow complex tachycardia; retrograde P waves seen as pseudo-S waves in inferior leads and pseudo-R' in V1; dynamic R-P interval lengthening and P-R interval shortening during the rhythm; terminal wide-complex artifact.",
+        "comparison": "N/A",
+        "impression": "AV Nodal Reentrant Tachycardia (AVNRT)"
+    }
 }

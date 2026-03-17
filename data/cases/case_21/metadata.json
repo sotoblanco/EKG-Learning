@@ -8,5 +8,14 @@
     "topics": [
         "Premature Atrial Contractions"
     ],
-    "category": "Rhythm"
+    "category": "Rhythm",
+    "report": {
+        "rhythm": "Sinus rhythm with complete heart (AV) block and A-V junctional escape rhythm",
+        "rate": "N/A",
+        "axis": "N/A",
+        "intervals": "Narrow QRS; PR interval is dissociated (complete heart block)",
+        "findings": "Complete heart block, ventriculophasic sinus arrhythmia, proximal junctional escape rhythm",
+        "comparison": "Condition reportedly present since birth",
+        "impression": "Congenital complete heart block with a stable A-V junctional escape rhythm; asymptomatic and no pacemaker required at this time."
+    }
 }

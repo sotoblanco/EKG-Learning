@@ -10,5 +10,14 @@
         "AV Block",
         "Left Ventricular Hypertrophy"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Normal Sinus Rhythm",
+        "rate": "70 bpm",
+        "axis": "Left Axis Deviation",
+        "intervals": "PR: 240 ms, QRS: 140 ms, QTc: 475 ms",
+        "findings": "First-degree AV block, Left Atrial Abnormality (LAA), Left Ventricular Hypertrophy (LVH), Right Bundle Branch Block (RBBB), Pathologic Q waves in leads V1-V5, I, and aVL, Persistent ST-segment elevation in anterior/lateral leads (V1-V5, I, aVL), Lateral ST-T wave changes.",
+        "comparison": "ECG stable for the past 5 years.",
+        "impression": "Left ventricular aneurysm pattern (persistent ST elevation after old extensive anterior myocardial infarction) and chronic heart failure."
+    }
 }

@@ -10,5 +10,14 @@
         "AV Block",
         "Left Ventricular Hypertrophy"
     ],
-    "category": "Hypertrophy"
+    "category": "Hypertrophy",
+    "report": {
+        "rhythm": "Atrial tachycardia with variable block",
+        "rate": "Atrial rate 150 bpm; variable QRS rate",
+        "axis": "Left axis deviation",
+        "intervals": "PR: variable; QRS: N/A; QTc: N/A",
+        "findings": "Left ventricular hypertrophy (LVH), variable AV block, P waves resembling sinus P waves, subtle QRS morphology variation",
+        "comparison": "N/A",
+        "impression": "Atrial tachycardia with variable AV block and left ventricular hypertrophy"
+    }
 }

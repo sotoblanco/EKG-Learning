@@ -8,5 +8,14 @@
     "topics": [
         "Uncategorized"
     ],
-    "category": "Hypertrophy"
+    "category": "Hypertrophy",
+    "report": {
+        "rhythm": "",
+        "rate": "",
+        "axis": "",
+        "intervals": "",
+        "findings": "",
+        "comparison": "",
+        "impression": ""
+    }
 }

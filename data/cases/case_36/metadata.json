@@ -11,5 +11,14 @@
         "Hyperkalemia",
         "Left Ventricular Hypertrophy"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Sinus rhythm with first-degree AV block",
+        "rate": "94 bpm",
+        "axis": "Vertical axis (+80 degrees)",
+        "intervals": "PR: 240 ms, QRS: 160 ms, QTc: 500 ms",
+        "findings": "Tall peaked (tented) T waves, PR and QRS prolongation, left ventricular hypertrophy (LVH) by voltage (deep S waves in V2), broad P waves (left atrial abnormality), PR segment depression in inferior-lateral leads with PR segment elevation in lead aVR.",
+        "comparison": "N/A",
+        "impression": "Severe hyperkalemia (Serum K+ 9.6 mEq/L) and suspected uremic pericarditis."
+    }
 }

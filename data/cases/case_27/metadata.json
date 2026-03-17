@@ -11,5 +11,14 @@
         "AV Block",
         "Premature Atrial Contractions"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Sinus rhythm with second-degree AV block (Type 1), featuring initial 2:1 block followed by 3:2 Wenckebach conduction.",
+        "rate": "Sinus rate ~85 bpm; Ventricular rate approximately 40-50 bpm.",
+        "axis": "Left axis deviation.",
+        "intervals": "PR: Variable (prolonging until a dropped beat); QRS: >120 ms (widened, consistent with RBBB); QTc: Not specifically calculated but appears prolonged due to hyperacute T-wave changes.",
+        "findings": "Hyperacute ST-segment elevation and T-waves in leads II, III, aVF, and V4-V6; pathologic Q waves in inferior leads (II, III, aVF); reciprocal ST-segment depression in V1-V3; tall initial R waves in V1-V3; Right Bundle Branch Block (RBBB) morphology.",
+        "comparison": "N/A",
+        "impression": "Acute infero-lateroposterior myocardial infarction complicated by Right Bundle Branch Block (RBBB) and second-degree AV block (Type 1)."
+    }
 }

@@ -11,5 +11,14 @@
         "AV Block",
         "Premature Atrial Contractions"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Sinus tachycardia with 2:1 AV block",
+        "rate": "Atrial rate ~120 bpm, Ventricular rate ~60 bpm",
+        "axis": "Left axis deviation",
+        "intervals": "PR: ~180 ms (for conducted beats); QRS: ~160 ms; QTc: ~440 ms",
+        "findings": "2:1 atrioventricular (AV) block with hidden P waves in T waves; Left Bundle Branch Block (LBBB) characterized by wide QRS, QS pattern in V1-V3, and monophasic/notched R waves in I, aVL, and V6; secondary ST-T wave changes; J-point elevation in right precordial leads (common in LBBB).",
+        "comparison": "N/A",
+        "impression": "Sinus tachycardia with 2:1 AV block (likely Type II infranodal) and Left Bundle Branch Block (LBBB). Requires clinical evaluation for pacemaker implantation."
+    }
 }

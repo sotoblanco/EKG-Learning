@@ -8,5 +8,14 @@
     "topics": [
         "Long QT Syndrome"
     ],
-    "category": "Rhythm"
+    "category": "Rhythm",
+    "report": {
+        "rhythm": "Normal Sinus Rhythm",
+        "rate": "52 bpm",
+        "axis": "Normal axis",
+        "intervals": "PR: 160 ms, QRS: 80 ms, QT: 600 ms, QTc: 557 ms",
+        "findings": "Markedly prolonged QT interval (0.6 seconds), broad T waves with prominent notching in precordial leads (V2-V4), sinus bradycardia.",
+        "comparison": "N/A",
+        "impression": "Congenital (hereditary) long QT syndrome"
+    }
 }

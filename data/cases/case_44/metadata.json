@@ -9,5 +9,14 @@
         "Hypokalemia",
         "Long QT Syndrome"
     ],
-    "category": "Diverse disease"
+    "category": "Diverse disease",
+    "report": {
+        "rhythm": "Normal Sinus Rhythm",
+        "rate": "75 bpm",
+        "axis": "Normal axis",
+        "intervals": "PR: 160 ms, QRS: 80 ms, QT(U): ~600 ms, QTc: ~670 ms",
+        "findings": "Very prominent U waves, prolonged QT(U) interval, mild ST depression in inferior and lateral leads.",
+        "comparison": "New changes compared to assumed prior normal EKG.",
+        "impression": "Acquired long QT(U) syndrome due to severe hypokalemia (1.5 mEq/L), posing a risk for torsade de pointes."
+    }
 }

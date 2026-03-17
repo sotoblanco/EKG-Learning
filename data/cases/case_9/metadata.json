@@ -9,5 +9,14 @@
         "Ventricular Tachycardia",
         "AV Block"
     ],
-    "category": "Rhythm"
+    "category": "Rhythm",
+    "report": {
+        "rhythm": "Normal Sinus Rhythm",
+        "rate": "77 bpm",
+        "axis": "Normal axis",
+        "intervals": "PR: 160 ms, QRS: 80 ms, QT: 300 ms, QTc: 341 ms",
+        "findings": "Markedly short ST segment resulting in a short QT interval; the T wave appears to begin almost immediately after the QRS complex.",
+        "comparison": "N/A",
+        "impression": "Short QT interval secondary to severe hypercalcemia (16 mg/dL) from parathyroid carcinoma."
+    }
 }

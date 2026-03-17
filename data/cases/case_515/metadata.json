@@ -10,5 +10,14 @@
         "Atrial Flutter",
         "Premature Atrial Contractions"
     ],
-    "category": "Hypertrophy"
+    "category": "Hypertrophy",
+    "report": {
+        "rhythm": "",
+        "rate": "",
+        "axis": "",
+        "intervals": "",
+        "findings": "",
+        "comparison": "",
+        "impression": ""
+    }
 }

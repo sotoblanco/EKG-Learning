@@ -10,5 +10,14 @@
         "Pericarditis",
         "Right Bundle Branch Block"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Sinus rhythm",
+        "rate": "65 bpm",
+        "axis": "Normal axis",
+        "intervals": "PR: 200ms, QRS: 80ms, QTc: 420ms",
+        "findings": "ST-segment elevations in lateral precordial leads V4-V6; subtle reciprocal ST-segment depressions and straightening in V2-V3; borderline Q waves in the inferior leads (III, aVF).",
+        "comparison": "N/A",
+        "impression": "Acute lateral wall myocardial infarction due to left circumflex artery occlusion."
+    }
 }

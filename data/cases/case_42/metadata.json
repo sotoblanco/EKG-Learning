@@ -9,5 +9,14 @@
         "Myocardial Infarction",
         "Premature Atrial Contractions"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Sinus tachycardia with frequent atrial ectopy (borderline Multifocal Atrial Tachycardia)",
+        "rate": "115 bpm",
+        "axis": "Markedly superior axis (Extreme axis deviation / Northwest axis)",
+        "intervals": "PR: ~160 ms, QRS: ~90 ms, QTc: ~390 ms",
+        "findings": "Right atrial overload (peaked P waves), markedly superior QRS axis, slow R wave progression with delayed precordial transition (V5/V6), pseudo-infarction pattern in anterior leads",
+        "comparison": "N/A",
+        "impression": "Severe chronic obstructive pulmonary disease (COPD) with associated right heart strain and atrial ectopy."
+    }
 }

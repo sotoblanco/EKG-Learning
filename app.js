@@ -24,6 +24,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const difficultyBadgeEl = document.getElementById('difficultyBadge');
     const topicsContainerEl = document.getElementById('topicsContainer');
     const categoryBadgeEl = document.getElementById('categoryBadge');
+
+    // Browse Report Panel
+    const reportPanelEl = document.getElementById('reportPanel');
+    const reportRhythmEl = document.getElementById('reportRhythm');
+    const reportRateEl = document.getElementById('reportRate');
+    const reportAxisEl = document.getElementById('reportAxis');
+    const reportIntervalsEl = document.getElementById('reportIntervals');
+    const reportFindingsEl = document.getElementById('reportFindings');
+    const reportImpressionEl = document.getElementById('reportImpression');
     
     const difficultyFilterEl = document.getElementById('difficultyFilter');
     const topicFilterEl = document.getElementById('topicFilter');
@@ -50,6 +59,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const quizDiagnosisText = document.getElementById('quizDiagnosisText');
     const quizSourceUrl = document.getElementById('quizSourceUrl');
     const nextQuestionBtn = document.getElementById('nextQuestionBtn');
+
+    // Quiz Measurement Elements
+    const quizMeasurementSection = document.getElementById('quizMeasurementSection');
+    const quizInputRhythm = document.getElementById('quizInputRhythm');
+    const quizInputRate = document.getElementById('quizInputRate');
+    const quizInputAxis = document.getElementById('quizInputAxis');
+    const quizInputIntervals = document.getElementById('quizInputIntervals');
+    const quizRevealRhythm = document.getElementById('quizRevealRhythm');
+    const quizRevealRate = document.getElementById('quizRevealRate');
+    const quizRevealAxis = document.getElementById('quizRevealAxis');
+    const quizRevealIntervals = document.getElementById('quizRevealIntervals');
 
     // Learning Elements
     const tabLearning = document.getElementById('tabLearning');
@@ -363,6 +383,25 @@ Click the button below to begin your journey into the world of electrocardiology
                 }
 
                 caseContentEl.style.display = 'flex';
+
+                // Report Panel
+                if (data.report) {
+                    function setReportValue(el, val) {
+                        if (!el) return;
+                        const isNA = !val || val.trim() === 'N/A';
+                        el.textContent = isNA ? 'N/A' : val;
+                        el.className = 'report-value' + (isNA ? ' not-available' : '');
+                    }
+                    setReportValue(reportRhythmEl, data.report.rhythm);
+                    setReportValue(reportRateEl, data.report.rate);
+                    setReportValue(reportAxisEl, data.report.axis);
+                    setReportValue(reportIntervalsEl, data.report.intervals);
+                    setReportValue(reportFindingsEl, data.report.findings);
+                    setReportValue(reportImpressionEl, data.report.impression);
+                    reportPanelEl.style.display = 'block';
+                } else {
+                    reportPanelEl.style.display = 'none';
+                }
             })
             .catch(err => {
                 console.error('Error loading case metadata:', err);
@@ -435,6 +474,21 @@ Click the button below to begin your journey into the world of electrocardiology
     showAnswerBtn.addEventListener('click', () => {
         showAnswerBtn.style.display = 'none';
         quizRevealedContent.style.display = 'block';
+
+        // Reveal measurements in quiz panel
+        if (quizMeasurementSection._reportData) {
+            const r = quizMeasurementSection._reportData;
+            function revealMeasurement(input, revealEl, val) {
+                const isNA = !val || val.trim() === 'N/A';
+                revealEl.textContent = isNA ? 'Answer: N/A' : `Answer: ${val}`;
+                revealEl.style.display = 'block';
+                if (!isNA) input.classList.add('quiz-revealed-correct');
+            }
+            revealMeasurement(quizInputRhythm, quizRevealRhythm, r.rhythm);
+            revealMeasurement(quizInputRate, quizRevealRate, r.rate);
+            revealMeasurement(quizInputAxis, quizRevealAxis, r.axis);
+            revealMeasurement(quizInputIntervals, quizRevealIntervals, r.intervals);
+        }
     });
 
     nextQuestionBtn.addEventListener('click', () => {
@@ -468,6 +522,21 @@ Click the button below to begin your journey into the world of electrocardiology
                 setImageWithFallback(quizEkgImage, caseData.folder);
                 quizClinicalHistory.textContent = data.clinical_history || 'No history provided.';
                 quizDiagnosisText.textContent = data.diagnosis || 'No diagnosis provided.';
+
+                // Show measurement section if report data exists
+                if (data.report && quizMeasurementSection) {
+                    quizMeasurementSection._reportData = data.report;
+                    quizInputRhythm.value = '';
+                    quizInputRate.value = '';
+                    quizInputAxis.value = '';
+                    quizInputIntervals.value = '';
+                    [quizInputRhythm, quizInputRate, quizInputAxis, quizInputIntervals].forEach(i => i.classList.remove('quiz-revealed-correct'));
+                    [quizRevealRhythm, quizRevealRate, quizRevealAxis, quizRevealIntervals].forEach(r => { r.style.display = 'none'; r.textContent = ''; });
+                    quizMeasurementSection.style.display = 'block';
+                } else if (quizMeasurementSection) {
+                    quizMeasurementSection._reportData = null;
+                    quizMeasurementSection.style.display = 'none';
+                }
                 
                 if (data.difficulty && data.difficulty > 0) {
                     quizDifficultyBadge.textContent = `Difficulty: ${'*'.repeat(data.difficulty)}`;

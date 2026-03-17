@@ -9,5 +9,14 @@
         "Atrial Flutter",
         "AV Block"
     ],
-    "category": "Rhythm"
+    "category": "Rhythm",
+    "report": {
+        "rhythm": "Atrial flutter",
+        "rate": "Atrial rate ~300 bpm, Ventricular rate ~150 bpm",
+        "axis": "Normal axis",
+        "intervals": "PR: N/A; QRS: 80 ms; QTc: 440 ms",
+        "findings": "Narrow complex tachycardia; sawtooth flutter waves best seen in inferior leads (II, III, aVF); variable AV conduction (predominantly 2:1 with some 3:1 and probable Wenckebach)",
+        "comparison": "N/A",
+        "impression": "Atrial flutter with variable ventricular response"
+    }
 }

@@ -11,5 +11,14 @@
         "Wolff-Parkinson-White",
         "Right Ventricular Hypertrophy"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Sinus rhythm",
+        "rate": "75 bpm",
+        "axis": "Left axis deviation",
+        "intervals": "PR: 160ms, QRS: 80ms, QTc: ~450ms",
+        "findings": "Left atrial abnormality; pathologic Q waves in inferior (II, III, aVF) and lateral (I, aVL, V6) leads; tall R waves in right precordial leads (V1, V2) indicating posterior involvement; 'reverse' R-wave progression; ST-T wave abnormalities in leads I, aVL, and V6.",
+        "comparison": "N/A",
+        "impression": "Large old infero-postero-lateral myocardial infarction, likely contributing to the patient's clinical signs of congestive heart failure."
+    }
 }

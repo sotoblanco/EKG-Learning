@@ -11,5 +11,14 @@
         "Right Bundle Branch Block",
         "Right Ventricular Hypertrophy"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Atrial fibrillation with rapid ventricular response",
+        "rate": "Rapid",
+        "axis": "Marked right axis deviation",
+        "intervals": "PR: N/A; QRS: Relatively normal; QTc: N/A",
+        "findings": "qR morphology in V1; rS or QS waves in leads I and aVL; rS type complexes in lateral precordial leads",
+        "comparison": "N/A",
+        "impression": "Right ventricular hypertrophy (RVH) consistent with severe mitral stenosis, pulmonary hypertension, and right heart failure."
+    }
 }

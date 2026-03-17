@@ -11,5 +11,14 @@
         "Long QT Syndrome",
         "Left Ventricular Hypertrophy"
     ],
-    "category": "Hypertrophy"
+    "category": "Hypertrophy",
+    "report": {
+        "rhythm": "Junctional rhythm with retrograde P waves (long RP interval) and a single ventricular premature beat.",
+        "rate": "54 bpm",
+        "axis": "+80 degrees (vertical axis)",
+        "intervals": "QRS: ~80ms; QTc: prolonged (estimated ~480ms); long repolarization interval with prominent U waves.",
+        "findings": "Borderline LVH by precordial voltage; vertical axis suggesting biventricular hypertrophy (typical for mitral valve disease); lateral ST-segment depressions (likely digoxin effect/LVH strain); prominent U waves.",
+        "comparison": "N/A",
+        "impression": "Junctional rhythm with prolonged repolarization and evidence of biventricular hypertrophy, likely related to rheumatic mitral valve disease and medication effects (digoxin, phenothiazine)."
+    }
 }

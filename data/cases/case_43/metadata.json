@@ -9,5 +9,14 @@
         "Atrial Fibrillation",
         "Right Ventricular Hypertrophy"
     ],
-    "category": "Hypertrophy"
+    "category": "Hypertrophy",
+    "report": {
+        "rhythm": "Normal Sinus Rhythm",
+        "rate": "75 bpm",
+        "axis": "Normal axis",
+        "intervals": "PR: 160 ms, QRS: 80 ms, QTc: 447 ms",
+        "findings": "Left atrial abnormality (LAA) characterized by widened, bifid P waves in Lead II and a prominent terminal negative component of the P wave in Lead V1 (duration > 80 ms); minimal right ventricular (RV) conduction delay noted in V2.",
+        "comparison": "N/A",
+        "impression": "Sinus rhythm with marked left atrial abnormality, consistent with the patient's diagnosis of severe mitral stenosis."
+    }
 }

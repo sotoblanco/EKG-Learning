@@ -8,5 +8,14 @@
     "topics": [
         "Hyperkalemia"
     ],
-    "category": "Fundamentals"
+    "category": "Fundamentals",
+    "report": {
+        "rhythm": "",
+        "rate": "",
+        "axis": "",
+        "intervals": "",
+        "findings": "",
+        "comparison": "",
+        "impression": ""
+    }
 }

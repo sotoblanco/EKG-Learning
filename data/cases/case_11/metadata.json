@@ -12,5 +12,14 @@
         "Premature Atrial Contractions",
         "Left Ventricular Hypertrophy"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Sinus rhythm",
+        "rate": "65 bpm",
+        "axis": "Borderline left axis deviation",
+        "intervals": "PR: 220 ms, QRS: ~100 ms, QT/QTc: 480 ms",
+        "findings": "Diffuse, very prominent symmetric anterior T wave inversions (V2-V6, I, aVL) consistent with Wellens' pattern; Left atrial abnormality; Left ventricular hypertrophy (LVH) by voltage; Mild PR prolongation; QT prolongation.",
+        "comparison": "Previous tracing during chest pain episode 2 days prior showed 1-2 mm ST elevation in leads I, aVL, and V3-V6.",
+        "impression": "Diffuse anterior T wave inversions suggestive of probable ischemia or non-Q wave myocardial infarction (Wellens' syndrome), most likely due to transient proximal LAD occlusion/spasm with subsequent myocardial stunning."
+    }
 }

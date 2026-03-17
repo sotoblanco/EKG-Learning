@@ -8,5 +8,14 @@
     "topics": [
         "Right Ventricular Hypertrophy"
     ],
-    "category": "Hypertrophy"
+    "category": "Hypertrophy",
+    "report": {
+        "rhythm": "Sinus rhythm with ventricular premature complexes",
+        "rate": "N/A",
+        "axis": "Right axis deviation",
+        "intervals": "N/A",
+        "findings": "Right ventricular hypertrophy (prominent R/S ratio in V1), left atrial abnormality (biphasic P in V1 with broad negative component; wide, notched P waves), non-specific inferior ST-T changes",
+        "comparison": "N/A",
+        "impression": "Mitral stenosis, likely due to rheumatic heart disease"
+    }
 }

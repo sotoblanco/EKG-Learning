@@ -10,5 +10,14 @@
         "Pericarditis",
         "Left Bundle Branch Block"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Sinus tachycardia",
+        "rate": "110 bpm",
+        "axis": "Normal axis",
+        "intervals": "PR: 140 ms, QRS: 80 ms, QTc: 430 ms",
+        "findings": "Diffuse concave-upward ST-segment elevations in leads I, II, III, aVF, and V2-V6; PR-segment depression in leads II, III, aVF, and V2-V6; PR-segment elevation in lead aVR; Sinus tachycardia.",
+        "comparison": "N/A",
+        "impression": "Acute pericarditis"
+    }
 }

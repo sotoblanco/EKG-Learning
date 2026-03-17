@@ -10,5 +10,14 @@
         "Atrial Flutter",
         "Right Bundle Branch Block"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Atrial flutter with 2:1 AV conduction",
+        "rate": "Ventricular rate ~115 bpm (Atrial rate ~230 bpm)",
+        "axis": "Left axis deviation",
+        "intervals": "PR: N/A (atrial flutter); QRS: ~140 ms; QTc: ~420 ms",
+        "findings": "Wide complex tachycardia; Right Bundle Branch Block (RBBB) pattern (rSR' in V1, wide S in I and V6); Left axis deviation (consistent with Left Anterior Fascicular Block); possible prior inferior MI (Q waves in leads III and aVF); typical counterclockwise atrial flutter waves (negative in II, positive in V1).",
+        "comparison": "Right bundle branch block and left axis deviation are noted as 'old per history'.",
+        "impression": "Sustained typical atrial flutter with 2:1 conduction and underlying bifascicular block (RBBB + LAFB), likely contributing to or precipitating congestive heart failure."
+    }
 }

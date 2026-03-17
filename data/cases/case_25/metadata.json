@@ -10,5 +10,14 @@
         "Hypokalemia",
         "Long QT Syndrome"
     ],
-    "category": "Rhythm"
+    "category": "Rhythm",
+    "report": {
+        "rhythm": "Sinus bradycardia",
+        "rate": "46 bpm",
+        "axis": "Normal axis",
+        "intervals": "PR: 160 ms, QRS: 80 ms, QU: 600 ms, QTc: ~530 ms",
+        "findings": "Diffuse T-wave flattening and inversions; markedly prominent U-waves, most visible in leads V2 and V3; prolonged ventricular repolarization (QU prolongation).",
+        "comparison": "Previous ECG was normal.",
+        "impression": "Severe hypokalemia (K+ 2.4 mEq/L) causing characteristic U-waves and repolarization prolongation, placing the patient at high risk for torsade de pointes."
+    }
 }

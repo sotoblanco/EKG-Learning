@@ -9,5 +9,14 @@
         "Hyperkalemia",
         "Left Bundle Branch Block"
     ],
-    "category": "Axis"
+    "category": "Axis",
+    "report": {
+        "rhythm": "Sinus rhythm",
+        "rate": "65 bpm",
+        "axis": "Left axis deviation",
+        "intervals": "PR: 240 ms, QRS: 240 ms, QTc: 540 ms",
+        "findings": "Marked QRS widening (intraventricular conduction delay) with LBBB morphology, peaked T waves, flattened/low-amplitude P waves, and prolonged PR interval (1st degree AV block).",
+        "comparison": "N/A",
+        "impression": "Severe hyperkalemia (7.6 mEq/L) resulting in profound intraventricular conduction delay and characteristic repolarization changes."
+    }
 }

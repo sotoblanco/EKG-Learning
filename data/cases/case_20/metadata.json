@@ -9,5 +9,14 @@
         "Myocardial Infarction",
         "Right Bundle Branch Block"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "N/A",
+        "rate": "N/A",
+        "axis": "N/A",
+        "intervals": "N/A",
+        "findings": "Right bundle branch block (RBBB), qR pattern in anterior precordial leads (pathologic Q replacing initial R), marked ST elevation, upright T waves in right precordial leads, pathologic Q waves extending past V2",
+        "comparison": "The right bundle branch block (RBBB) is noted as likely preexisting",
+        "impression": "Acute anteroseptal myocardial infarction (MI) in the setting of a preexisting right bundle branch block (RBBB)"
+    }
 }

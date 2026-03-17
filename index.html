@@ -120,6 +120,18 @@
                         <p id="diagnosisText"></p>
                     </div>
 
+                    <div id="reportPanel" class="report-panel">
+                        <h3>EKG Report</h3>
+                        <div class="report-grid">
+                            <div class="report-item"><span class="report-label">Rhythm</span><span class="report-value" id="reportRhythm"></span></div>
+                            <div class="report-item"><span class="report-label">Rate</span><span class="report-value" id="reportRate"></span></div>
+                            <div class="report-item"><span class="report-label">Axis</span><span class="report-value" id="reportAxis"></span></div>
+                            <div class="report-item"><span class="report-label">Intervals</span><span class="report-value" id="reportIntervals"></span></div>
+                            <div class="report-item wide"><span class="report-label">Findings</span><span class="report-value" id="reportFindings"></span></div>
+                            <div class="report-item wide"><span class="report-label">Impression</span><span class="report-value" id="reportImpression"></span></div>
+                        </div>
+                    </div>
+
                     <div class="info-actions">
                         <a id="sourceUrl" href="#" target="_blank" rel="noopener" class="button">View Source</a>
                     </div>
@@ -287,6 +299,33 @@
                 </div>
 
                 <div id="quizAnswerSection" class="quiz-answer-hidden">
+                    <!-- Measurement Inputs -->
+                    <div class="quiz-report-section" id="quizMeasurementSection" style="display:none;">
+                        <h4>📋 Enter Your Measurements</h4>
+                        <div class="quiz-report-grid">
+                            <div class="quiz-report-item">
+                                <label for="quizInputRhythm">Rhythm</label>
+                                <input type="text" id="quizInputRhythm" placeholder="e.g. Normal Sinus Rhythm" autocomplete="off">
+                                <span class="quiz-answer-reveal" id="quizRevealRhythm"></span>
+                            </div>
+                            <div class="quiz-report-item">
+                                <label for="quizInputRate">Rate</label>
+                                <input type="text" id="quizInputRate" placeholder="e.g. 75 bpm" autocomplete="off">
+                                <span class="quiz-answer-reveal" id="quizRevealRate"></span>
+                            </div>
+                            <div class="quiz-report-item">
+                                <label for="quizInputAxis">Axis</label>
+                                <input type="text" id="quizInputAxis" placeholder="e.g. Normal axis" autocomplete="off">
+                                <span class="quiz-answer-reveal" id="quizRevealAxis"></span>
+                            </div>
+                            <div class="quiz-report-item">
+                                <label for="quizInputIntervals">Intervals</label>
+                                <input type="text" id="quizInputIntervals" placeholder="PR / QRS / QTc" autocomplete="off">
+                                <span class="quiz-answer-reveal" id="quizRevealIntervals"></span>
+                            </div>
+                        </div>
+                    </div>
+
                     <button id="showAnswerBtn" class="button primary-button" style="width: 100%; height: 48px; font-size: 16px;">Show Answer</button>
                     
                     <div id="quizRevealedContent" style="display: none;">

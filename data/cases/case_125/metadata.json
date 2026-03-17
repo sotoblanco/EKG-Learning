@@ -8,5 +8,14 @@
     "topics": [
         "Right Bundle Branch Block"
     ],
-    "category": "Diverse disease"
+    "category": "Diverse disease",
+    "report": {
+        "rhythm": "",
+        "rate": "",
+        "axis": "",
+        "intervals": "",
+        "findings": "",
+        "comparison": "",
+        "impression": ""
+    }
 }

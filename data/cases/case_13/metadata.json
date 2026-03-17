@@ -11,5 +11,14 @@
         "Wolff-Parkinson-White",
         "Right Ventricular Hypertrophy"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Sinus rhythm",
+        "rate": "79 bpm",
+        "axis": "Right axis deviation",
+        "intervals": "PR: 180 ms, QRS: 80 ms, QTc: 460 ms",
+        "findings": "Left atrial abnormality (LAA) with broad P waves (>120 ms) and biphasic P in V1; Right ventricular hypertrophy (RVH) suggested by prominent R wave in V1 (increased R/S ratio), right axis deviation, and inverted T wave in V1; Relatively low amplitude QRS voltage; S1Q3T3 pattern (rS in lead I, qR and T-wave inversion in lead III).",
+        "comparison": "N/A",
+        "impression": "Mitral stenosis with associated left atrial abnormality and right ventricular hypertrophy."
+    }
 }

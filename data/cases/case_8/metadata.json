@@ -9,5 +9,14 @@
         "Myocardial Infarction",
         "Atrial Fibrillation"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Atrial fibrillation",
+        "rate": "90 bpm",
+        "axis": "Right axis deviation",
+        "intervals": "PR: N/A, QRS: 100 ms, QTc: 510 ms",
+        "findings": "Markedly decreased voltage in limb leads, rightward axis, and loss of R-wave progression (QS complexes) in leads V1-V3 suggestive of a pseudo-infarction pattern.",
+        "comparison": "N/A",
+        "impression": "Cardiomyopathy associated with disseminated adenocarcinoma, presenting with atrial fibrillation, low voltage, and a pseudo-infarction pattern."
+    }
 }

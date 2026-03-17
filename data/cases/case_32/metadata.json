@@ -8,5 +8,14 @@
     "topics": [
         "Myocardial Infarction"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Sinus tachycardia",
+        "rate": "120 bpm",
+        "axis": "Indeterminate axis",
+        "intervals": "PR: ~160 ms, QRS: ~90 ms, QTc: ~452 ms (upper normal limits)",
+        "findings": "Prominent T-wave inversions in V1-V4; delayed precordial transition zone (R=S in lead V6); prominent S-wave in lead I with minuscule R-waves in III and aVF; peaked P-waves in lead II (P-pulmonale); poor R-wave progression.",
+        "comparison": "N/A",
+        "impression": "Acute right ventricular (RV) strain pattern highly suggestive of pulmonary embolism (PE) in this clinical context."
+    }
 }

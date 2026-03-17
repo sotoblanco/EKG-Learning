@@ -9,5 +9,14 @@
         "Hyperkalemia",
         "Left Ventricular Hypertrophy"
     ],
-    "category": "Hypertrophy"
+    "category": "Hypertrophy",
+    "report": {
+        "rhythm": "Sinus bradycardia",
+        "rate": "45 bpm",
+        "axis": "Normal axis",
+        "intervals": "PR: ~220 ms, QRS: ~80 ms, QTc: ~420 ms",
+        "findings": "Symmetrically peaked ('tented') T waves most prominent in precordial leads V2-V6; broad and flattened sinus P waves; low voltage in limb leads.",
+        "comparison": "N/A",
+        "impression": "Severe hyperkalemia (K+ = 8.7 mEq/L) characterized by peaked T waves and flattened P waves; notably narrow QRS despite the severity of the electrolyte abnormality."
+    }
 }

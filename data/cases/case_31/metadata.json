@@ -8,5 +8,14 @@
     "topics": [
         "Right Bundle Branch Block"
     ],
-    "category": "Rhythm"
+    "category": "Rhythm",
+    "report": {
+        "rhythm": "Atrial tachycardia with 2:1 block",
+        "rate": "Ventricular rate 75 bpm; Atrial rate 150 bpm",
+        "axis": "Left axis deviation (approx -45 degrees)",
+        "intervals": "PR: ~160 ms (conducted beats), QRS: ~130 ms, QTc: ~450 ms",
+        "findings": "2:1 conduction ratio with hidden P waves in T-waves; Right Bundle Branch Block (RBBB) indicated by RSR' in V1 and wide S in I and V6; Left Anterior Fascicular Block (LAFB) indicated by left axis deviation; Bifascicular block",
+        "comparison": "N/A",
+        "impression": "Atrial tachycardia with 2:1 AV block and bifascicular block (RBBB + LAFB)."
+    }
 }

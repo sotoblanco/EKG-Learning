@@ -9,5 +9,14 @@
         "Ventricular Fibrillation",
         "Right Bundle Branch Block"
     ],
-    "category": "Rhythm"
+    "category": "Rhythm",
+    "report": {
+        "rhythm": "Sinus rhythm",
+        "rate": "56 bpm",
+        "axis": "Left axis deviation",
+        "intervals": "PR: 180ms, QRS: 140ms, QTc: 425ms",
+        "findings": "Right bundle branch block (RBBB), left anterior fascicular block (LAFB), pathologic anterior Q waves (V1-V3), poor R-wave progression, polyphasic QRS phenotype in lead V4 (El-Sherif sign).",
+        "comparison": "N/A",
+        "impression": "Chronic coronary artery disease with extensive myocardial scarring and ventricular aneurysm (suggested by El-Sherif sign), status post VF arrest."
+    }
 }

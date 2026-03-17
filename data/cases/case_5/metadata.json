@@ -11,5 +11,14 @@
         "Premature Atrial Contractions",
         "Left Ventricular Hypertrophy"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "2:1 Atrioventricular (AV) block",
+        "rate": "Ventricular rate 32 bpm, Atrial (P-wave) rate 64 bpm",
+        "axis": "Borderline left axis deviation",
+        "intervals": "PR: 200 ms, QRS: ~90 ms, QTc: ~321 ms",
+        "findings": "Non-conducted P waves alternating with conducted P waves (2:1 block), narrow QRS complex, Left Atrial Abnormality (LAA), Left Ventricular Hypertrophy (LVH) by voltage, and non-specific ST-T wave changes.",
+        "comparison": "Intermittent 3:2 AV Wenckebach and 1:1 conduction were observed on other recordings for this patient.",
+        "impression": "Asymptomatic 2:1 AV block (second-degree heart block), likely localized to the AV node given the narrow QRS and subsequent observation of Wenckebach."
+    }
 }

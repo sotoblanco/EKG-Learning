@@ -9,5 +9,14 @@
         "Myocardial Infarction",
         "Left Ventricular Hypertrophy"
     ],
-    "category": "Myocardial Infarction"
+    "category": "Myocardial Infarction",
+    "report": {
+        "rhythm": "Sinus bradycardia",
+        "rate": "58 bpm",
+        "axis": "N/A",
+        "intervals": "N/A",
+        "findings": "Marked left ventricular hypertrophy (LVH); deep (giant) T wave inversions in precordial (V3-V5) and limb leads; ST depressions in lateral chest leads; pseudo-infarct pattern",
+        "comparison": "N/A",
+        "impression": "Hypertrophic cardiomyopathy, apical variant (Yamaguchi's syndrome)"
+    }
 }
