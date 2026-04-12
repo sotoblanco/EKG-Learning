@@ -12,7 +12,7 @@
     <script>window.react = window.React;</script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.js"></script>
+    <script src="https://unpkg.com/lucide-react@0.344.0/dist/umd/lucide-react.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700&display=swap');
@@ -47,7 +47,7 @@
         const { 
             ChevronLeft, ChevronRight, BookOpen, Activity, Zap, Brain, 
             CheckCircle2, Eye, Timer 
-        } = LucideReact;
+        } = window.LucideReact;
 
         const COURSE_DATA = [
           {
