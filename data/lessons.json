@@ -8,7 +8,7 @@
         }
     },
     "Frequency": {
-        "intro": "lessons/frequency/intro.html",
+        "intro": "rate_interactive.html",
         "topics": {}
     },
     "Rhythm": {
