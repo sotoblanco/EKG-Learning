@@ -657,9 +657,7 @@ Click the button below to begin your journey into the world of electrocardiology
             }
 
             if (lessonPath) {
-                const fullPath = (lessonPath.startsWith('fundamentals/') || lessonPath.startsWith('data/')) 
-                    ? lessonPath 
-                    : `data/${lessonPath}`;
+                const fullPath = lessonPath.startsWith('data/') ? lessonPath : `data/${lessonPath}`;
 
                 if (fullPath.endsWith('.md')) {
                     // Fetch and Render Markdown
