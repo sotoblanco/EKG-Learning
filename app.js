@@ -705,10 +705,19 @@ Click the button below to begin your journey into the world of electrocardiology
                     }
                 } else {
                     // Load HTML via fetch and srcdoc to avoid cross-origin and CDN-related blockages
+                    console.log('Loading lesson from:', fullPath);
                     fetch(fullPath + '?_t=' + new Date().getTime())
-                        .then(res => res.text())
+                        .then(res => {
+                            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                            return res.text();
+                        })
                         .then(html => {
+                            console.log('Lesson HTML loaded, length:', html.length);
                             learningFrame.srcdoc = html;
+                        })
+                        .catch(err => {
+                            console.error('Failed to load lesson:', err);
+                            learningFrame.srcdoc = `<div style="padding:40px; color:red;">Failed to load lesson: ${err.message}</div>`;
                         });
                     
                     // Allow launching the interactive lessons in a new tab for a better experience
