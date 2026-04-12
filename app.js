@@ -704,11 +704,16 @@ Click the button below to begin your journey into the world of electrocardiology
                         };
                     }
                 } else {
-                    // Load HTML directly in iframe
-                    learningFrame.src = fullPath;
+                    // Load HTML via fetch and srcdoc to avoid cross-origin and CDN-related blockages
+                    fetch(fullPath + '?_t=' + new Date().getTime())
+                        .then(res => res.text())
+                        .then(html => {
+                            learningFrame.srcdoc = html;
+                        });
                     
-                    // Allow launching the interactive fundamentals in a new tab for a better experience
-                    if (learningLaunchInteractive && fullPath.includes('fundamentals_interactive.html')) {
+                    // Allow launching the interactive lessons in a new tab for a better experience
+                    const isInteractive = fullPath.includes('intro.html');
+                    if (learningLaunchInteractive && isInteractive) {
                         learningLaunchInteractive.style.display = 'block';
                         learningLaunchBtn.innerText = `Launch Fullscreen Interactive Path →`;
                         learningLaunchBtn.onclick = () => {
